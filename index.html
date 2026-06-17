@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Anthony — Systems, Networking & Cybersecurity. Technical portfolio.">
+<title>anthlab · Systems & Cybersecurity</title>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg:      #0d1117;
+    --bg2:     #161b22;
+    --bg3:     #1c2330;
+    --accent:  #00d4aa;
+    --accent2: #38bdf8;
+    --text:    #e6edf3;
+    --text2:   #8b949e;
+    --border:  rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --glass:   rgba(22,27,34,0.55);
+    --radius:  8px;
+    --shadow:  0 8px 32px rgba(0,0,0,0.4);
+  }
+
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+    overflow-x: hidden;
+    cursor: none;
+    transition: background 0.4s, color 0.4s;
+  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--bg3); border-radius: 3px; }
+
+  /* ── CUSTOM CURSOR — green arrow ── */
+  #cursor {
+    position: fixed;
+    width: 24px; height: 24px;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(0, 0);
+    transition: opacity 0.2s;
+  }
+  #cursor svg {
+    width: 100%; height: 100%;
+    filter: drop-shadow(0 0 4px rgba(0,212,170,0.7));
+    transition: transform 0.2s;
+  }
+  body:has(a:hover) #cursor svg, body:has(button:hover) #cursor svg { transform: scale(1.2); }
+
+  /* ── PROGRESS BAR ── */
+  #progress-bar {
+    position: fixed; top: 0; left: 0;
+    height: 2px; width: 0%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    z-index: 999;
+    transition: width 0.08s linear;
+  }
+
+  /* ── CANVAS ── */
+  #hero-canvas {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2.5rem;
+    background: rgba(13,17,23,0.88);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s, background 0.4s;
+  }
+
+  nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+  .nav-logo {
+    font-family: 'Courier New', monospace; font-size: 0.9rem;
+    color: var(--accent); letter-spacing: 0.04em; text-decoration: none;
+  }
+  .nav-logo span { color: var(--text2); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    color: var(--text2); text-decoration: none;
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+    transition: color 0.2s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0;
+    width: 0; height: 1px; background: var(--accent); transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-right { display: flex; align-items: center; gap: 0.75rem; }
+  .nav-gh {
+    font-family: 'Courier New', monospace; font-size: 0.78rem;
+    color: var(--accent); text-decoration: none;
+    border: 1px solid rgba(0,212,170,0.25); padding: 0.35rem 0.85rem;
+    border-radius: var(--radius); transition: background 0.2s, box-shadow 0.2s;
+  }
+  .nav-gh:hover { background: rgba(0,212,170,0.08); box-shadow: 0 0 12px rgba(0,212,170,0.15); }
+
+
+  /* ── HERO ── */
+  .hero-wrap { position: relative; overflow: hidden; min-height: 90vh; }
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 90vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 6rem 2.5rem 4rem; max-width: 900px; margin: 0 auto;
+  }
+  .hero-status {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'Courier New', monospace; font-size: 0.75rem;
+    color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 2rem; animation: fadeDown 0.8s ease both;
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--accent);
+    animation: pulse 2s ease-in-out infinite; box-shadow: 0 0 6px var(--accent);
+  }
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); box-shadow: 0 0 6px var(--accent); }
+    50%      { opacity:0.5; transform:scale(0.85); box-shadow: 0 0 2px var(--accent); }
+  }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes fadeUp   { from { opacity:0; transform:translateY(24px); }  to { opacity:1; transform:translateY(0); } }
+
+  .hero h1 {
+    font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 700;
+    letter-spacing: -0.03em; line-height: 1.05; margin-bottom: 0.5rem;
+    animation: fadeUp 0.9s 0.2s ease both;
+  }
+  .hero h1 .name { color: var(--text); }
+  .hero h1 .role { color: var(--accent); }
+  .typing-cursor {
+    display: inline-block; width: 3px; height: 0.85em;
+    background: var(--accent); vertical-align: baseline; margin-left: 2px;
+    animation: blink 1.1s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  .hero-desc {
+    font-size: 1.05rem; color: var(--text2); max-width: 540px;
+    margin: 1.5rem 0 2rem; line-height: 1.75;
+    animation: fadeUp 0.9s 0.4s ease both;
+  }
+
+  /* Counters */
+  .hero-counters {
+    display: flex; gap: 2.5rem; margin-bottom: 2rem;
+    animation: fadeUp 0.9s 0.45s ease both;
+  }
+  .counter-item { display: flex; flex-direction: column; }
+  .counter-num {
+    font-size: 1.8rem; font-weight: 700; color: var(--accent);
+    font-family: 'Courier New', monospace; line-height: 1;
+  }
+  .counter-label { font-size: 0.72rem; color: var(--text2); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.25rem; }
+
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2.5rem; animation: fadeUp 0.9s 0.5s ease both; }
+  .tag {
+    font-family: 'Courier New', monospace; font-size: 0.72rem;
+    padding: 0.3rem 0.7rem; border-radius: 3px; letter-spacing: 0.05em; border: 1px solid;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .tag:hover { transform: translateY(-2px); }
+  .tag-green { color: var(--accent);  border-color: rgba(0,212,170,0.25);  background: rgba(0,212,170,0.06); }
+  .tag-green:hover { box-shadow: 0 4px 12px rgba(0,212,170,0.15); }
+  .tag-blue  { color: var(--accent2); border-color: rgba(56,189,248,0.25); background: rgba(56,189,248,0.06); }
+  .tag-blue:hover  { box-shadow: 0 4px 12px rgba(56,189,248,0.15); }
+  .tag-gray  { color: var(--text2);   border-color: var(--border2);        background: rgba(255,255,255,0.03); }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.9s 0.6s ease both; }
+  .btn {
+    font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 0.7rem 1.4rem; border-radius: var(--radius); cursor: none;
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s, background 0.2s; font-family: inherit;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  a, button { cursor: none; }
+  .btn-solid { background: var(--accent); color: #0d1117; border: none; font-weight: 600; }
+  .btn-solid:hover { box-shadow: 0 6px 20px rgba(0,212,170,0.3); opacity: 0.9; }
+  .btn-outline { background: transparent; color: var(--text2); border: 1px solid var(--border2); }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); box-shadow: 0 6px 20px rgba(0,212,170,0.1); }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2.5rem; max-width: 900px; margin: 0 auto; }
+  .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 3rem; }
+  .section-num { font-family: 'Courier New', monospace; font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; }
+  .section-title { font-size: 1.3rem; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+  .section-line { flex: 1; height: 1px; background: var(--border); }
+  .full-border { border-top: 1px solid var(--border); }
+
+  /* ── PROJECTS — GLASSMORPHISM ── */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .project-card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .project-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+  }
+  .project-card:hover::before { transform: scaleX(1); }
+  .project-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 0 1px rgba(0,212,170,0.1); }
+  .project-card.coming { opacity: 0.65; }
+  .project-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .project-icon { font-size: 1.4rem; }
+  .project-links { display: flex; gap: 0.5rem; }
+  .project-link {
+    font-size: 0.75rem; font-family: 'Courier New', monospace; color: var(--text2);
+    text-decoration: none; border: 1px solid var(--border2); padding: 0.2rem 0.55rem;
+    border-radius: 3px; transition: color 0.2s, border-color 0.2s;
+  }
+  .project-link:hover { color: var(--accent); border-color: rgba(0,212,170,0.3); }
+  .project-title { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+  .project-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.65; flex: 1; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: auto; }
+  .ptag {
+    font-family: 'Courier New', monospace; font-size: 0.68rem;
+    color: var(--accent2); background: rgba(56,189,248,0.07);
+    border: 1px solid rgba(56,189,248,0.18); padding: 0.18rem 0.5rem; border-radius: 3px;
+  }
+  .coming-label { font-family: 'Courier New', monospace; font-size: 0.7rem; color: var(--text2); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ── EXPERIENCE — compact cards ── */
+  .exp-list {
+    display: flex; flex-direction: column;
+    border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+    gap: 1px; background: var(--border);
+  }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 0.3rem 1.5rem;
+    background: var(--bg2);
+    padding: 1.1rem 1.5rem;
+    transition: background 0.2s;
+    position: relative;
+  }
+  .exp-item::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .exp-item:hover { background: var(--bg3); }
+  .exp-item:hover::before { opacity: 1; }
+  .exp-role {
+    font-size: 0.9rem; font-weight: 600; color: var(--text);
+    grid-column: 1; grid-row: 1;
+  }
+  .exp-meta {
+    grid-column: 1; grid-row: 2;
+    display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+  }
+  .exp-company {
+    font-size: 0.8rem; color: var(--accent);
+    font-family: 'Courier New', monospace;
+  }
+
+  .exp-right {
+    grid-column: 2; grid-row: 1 / 3;
+    display: flex; flex-direction: column; align-items: flex-end;
+    justify-content: center; gap: 0.4rem;
+  }
+  .exp-period {
+    font-family: 'Courier New', monospace; font-size: 0.68rem;
+    color: var(--text2); white-space: nowrap;
+  }
+  .exp-type {
+    font-size: 0.65rem; font-family: 'Courier New', monospace;
+    padding: 0.15rem 0.55rem; border-radius: 3px; border: 1px solid;
+    text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap;
+  }
+  .type-volunteer  { color: var(--accent);  border-color: rgba(0,212,170,0.3);  background: rgba(0,212,170,0.07); }
+  .type-internship { color: var(--accent2); border-color: rgba(56,189,248,0.3); background: rgba(56,189,248,0.07); }
+
+  /* ── ABOUT ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .about-text p { font-size: 0.9rem; color: var(--text2); line-height: 1.8; margin-bottom: 1rem; }
+  .about-text p:last-child { margin-bottom: 0; }
+  .about-text strong { color: var(--text); font-weight: 500; }
+  .about-stats {
+    display: flex; flex-direction: column; gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .stat-row {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--bg2); padding: 0.9rem 1.25rem; transition: background 0.2s;
+  }
+  .stat-row:hover { background: var(--bg3); }
+  .stat-label { font-family: 'Courier New', monospace; font-size: 0.72rem; color: var(--text2); letter-spacing: 0.04em; }
+  .stat-val { font-size: 0.82rem; color: var(--text); font-weight: 500; text-align: right; }
+
+  /* ── EDUCATION — minimal ── */
+  .edu-list {
+    display: flex; flex-direction: column;
+  }
+  .edu-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 0 2rem;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+    transition: opacity 0.2s;
+  }
+  .edu-item:first-child { padding-top: 0; }
+  .edu-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .edu-item:hover { opacity: 0.85; }
+  .edu-year {
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem; color: var(--accent);
+    letter-spacing: 0.06em; padding-top: 0.15rem;
+  }
+  .edu-content {}
+  .edu-degree {
+    font-size: 0.92rem; font-weight: 600; color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  .edu-school {
+    font-size: 0.78rem; color: var(--text2);
+  }
+
+  /* ── SKILLS ── */
+  .skills-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  }
+  .skill-group { background: var(--bg2); padding: 1.4rem 1.5rem; transition: background 0.2s; }
+  .skill-group:hover { background: var(--bg3); }
+  .skill-group-label {
+    font-family: 'Courier New', monospace; font-size: 0.65rem; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .skill-group-label::before { content: ''; display: inline-block; width: 10px; height: 1px; background: var(--accent); }
+  .skill-list { list-style: none; }
+  .skill-list li {
+    font-size: 0.82rem; color: var(--text2); padding: 0.22rem 0;
+    display: flex; align-items: center; gap: 0.5rem;
+    transition: color 0.2s, transform 0.2s;
+  }
+  .skill-list li:hover { color: var(--text); transform: translateX(4px); }
+  .skill-list li::before { content: '▸'; color: var(--accent); font-size: 0.55rem; flex-shrink: 0; }
+
+  /* ── CERTS ── */
+  .certs-list {
+    display: flex; flex-direction: column; gap: 1px;
+    background: var(--border); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .cert-row {
+    display: flex; align-items: center; gap: 1.5rem;
+    background: var(--bg2); padding: 1.2rem 1.5rem;
+    transition: background 0.2s; position: relative; overflow: hidden;
+  }
+  .cert-row::after {
+    content: ''; position: absolute; left: 0; top: 0;
+    width: 3px; height: 100%; background: var(--accent);
+    transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s ease;
+  }
+  .cert-row:hover::after { transform: scaleY(1); }
+  .cert-row:hover { background: var(--bg3); }
+  .cert-logo {
+    width: 40px; height: 40px; border-radius: 5px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+    flex-shrink: 0; background: var(--bg3); border: 1px solid var(--border2);
+  }
+  .cert-info { flex: 1; }
+  .cert-name { font-size: 0.9rem; font-weight: 500; color: var(--text); margin-bottom: 0.15rem; }
+  .cert-issuer { font-size: 0.78rem; color: var(--text2); }
+  .cert-progress-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; min-width: 120px; }
+  .cert-badge {
+    font-family: 'Courier New', monospace; font-size: 0.68rem; text-transform: uppercase;
+    letter-spacing: 0.07em; padding: 0.25rem 0.7rem; border-radius: 3px; white-space: nowrap; border: 1px solid;
+  }
+  .badge-active  { color: var(--accent);  border-color: rgba(0,212,170,0.3);  background: rgba(0,212,170,0.08); }
+  .badge-planned { color: var(--text2);   border-color: var(--border2);        background: rgba(255,255,255,0.03); }
+  .cert-bar-bg { width: 100%; height: 3px; background: var(--border2); border-radius: 2px; overflow: hidden; }
+  .cert-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent2)); width: 0%; transition: width 1.2s ease; }
+
+  /* ── BLOG CAROUSEL ── */
+  .carousel-wrap { position: relative; }
+  .carousel-track-outer { overflow: hidden; border-radius: var(--radius); }
+  .carousel-track {
+    display: flex;
+    gap: 1rem;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    will-change: transform;
+    user-select: none;
+  }
+  .blog-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem;
+    display: flex; flex-direction: column; gap: 0.65rem;
+    text-decoration: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    position: relative; overflow: hidden;
+    flex: 0 0 calc(33.333% - 0.67rem);
+    min-width: 0;
+  }
+  .blog-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s ease;
+  }
+  .blog-card:hover::before { transform: scaleX(1); }
+  .blog-card:hover { border-color: rgba(0,212,170,0.2); box-shadow: 0 12px 40px rgba(0,0,0,0.25); }
+  .blog-card-meta { display: flex; justify-content: space-between; align-items: center; }
+  .blog-card-source {
+    font-family: 'Courier New', monospace; font-size: 0.65rem;
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .blog-card-date { font-family: 'Courier New', monospace; font-size: 0.65rem; color: var(--text2); }
+  .blog-card-title { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.4; }
+  .blog-card-desc { font-size: 0.78rem; color: var(--text2); line-height: 1.6; flex: 1; }
+  .blog-card-tag {
+    font-family: 'Courier New', monospace; font-size: 0.65rem;
+    color: var(--accent2); background: rgba(56,189,248,0.07);
+    border: 1px solid rgba(56,189,248,0.18); padding: 0.15rem 0.45rem; border-radius: 3px;
+    align-self: flex-start;
+  }
+  .carousel-controls {
+    display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem;
+  }
+  .carousel-dots { display: flex; gap: 0.5rem; align-items: center; }
+  .carousel-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--border2); border: none; cursor: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .carousel-dot.active { background: var(--accent); transform: scale(1.3); }
+  .carousel-arrows { display: flex; gap: 0.5rem; }
+  .carousel-btn {
+    width: 30px; height: 30px; border-radius: 4px;
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--text2); font-size: 0.8rem; cursor: none;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+    font-family: 'Courier New', monospace;
+  }
+  .carousel-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(0,212,170,0.06);
+  }
+  @media (max-width: 680px) {
+    .blog-card { flex: 0 0 100%; }
+  }
+  .blog-empty {
+    background: var(--bg2); border: 1px dashed var(--border2);
+    border-radius: var(--radius); padding: 3rem 2rem; text-align: center; transition: border-color 0.3s;
+  }
+  .blog-empty:hover { border-color: rgba(0,212,170,0.3); }
+  .blog-empty-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .blog-empty-title { font-size: 0.9rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
+  .blog-empty-desc { font-size: 0.82rem; color: var(--text2); max-width: 400px; margin: 0 auto; }
+  .blog-topics { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 1.5rem; }
+
+  /* ── CONTACT ── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start; }
+  .contact-intro { font-size: 0.9rem; color: var(--text2); line-height: 1.8; }
+  .contact-intro strong { color: var(--text); font-weight: 500; }
+  .contact-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.75rem;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 0.9rem 1.2rem; text-decoration: none;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+  }
+  .contact-link:hover { border-color: rgba(0,212,170,0.25); transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+  .contact-link-icon { font-size: 1rem; }
+  .contact-link-label { font-size: 0.8rem; color: var(--text2); flex: 1; }
+  .contact-link-val { font-family: 'Courier New', monospace; font-size: 0.78rem; color: var(--accent); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border); padding: 2rem 2.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 900px; margin: 0 auto;
+  }
+  .footer-text { font-family: 'Courier New', monospace; font-size: 0.72rem; color: var(--text2); letter-spacing: 0.04em; }
+  .footer-text span { color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 680px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    .hero { padding: 4rem 1.25rem 3rem; min-height: auto; }
+    section { padding: 3.5rem 1.25rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; }
+    .hero-counters { gap: 1rem; flex-wrap: wrap; }
+    .counter-item { flex: 1 1 calc(50% - 0.5rem); min-width: 0; }
+    .counter-num { font-size: 1.4rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    #cursor, #cursor-ring { display: none; }
+    body { cursor: auto; }
+    .btn, .theme-btn, .timeline-header { cursor: pointer; }
+    .cert-row { flex-wrap: wrap; gap: 0.75rem; }
+    .cert-progress-wrap { width: 100%; align-items: flex-start; min-width: unset; }
+    .cert-bar-bg { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 2L4 18L8.5 13.5L12 20L14.5 19L11 12.5L17 12.5L4 2Z" fill="#00d4aa" stroke="#00d4aa" stroke-width="0.5" stroke-linejoin="round"/>
+  </svg>
+</div>
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo"><span>~/</span>anthlab</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certs">Certs</a></li>
+    <li><a href="#blog">Articles</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://github.com/anthlab" target="_blank" rel="noopener" class="nav-gh">github/anthlab ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="home" class="hero-wrap">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero">
+    <div class="hero-status"><span class="dot"></span>actively looking · open to opportunities · valencia, spain</div>
+    <h1>
+      <span class="name">Anthony</span><br>
+      <span class="role" id="typing-role"></span><span class="typing-cursor"></span>
+    </h1>
+    <p class="hero-desc">Dual degree in ASIR and DAW. Infrastructure, networking and cloud as a foundation — cybersecurity as a destination. Actively looking for junior roles in Cybersecurity, Systems or Networks. Open to the right opportunity.</p>
+    <div class="hero-counters">
+      <div class="counter-item">
+        <span class="counter-num" data-target="2">0</span>
+        <span class="counter-label">Years experience</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-num" data-target="3">0</span>
+        <span class="counter-label">Companies</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-num" data-target="10">0</span>
+        <span class="counter-label">Technologies</span>
+      </div>
+      <div class="counter-item">
+        <span class="counter-num" data-target="3">0</span>
+        <span class="counter-label">Certifications</span>
+      </div>
+    </div>
+    <div class="hero-tags">
+      <span class="tag tag-green">Windows Server</span>
+      <span class="tag tag-green">Linux</span>
+      <span class="tag tag-green">Active Directory</span>
+      <span class="tag tag-green">TCP/IP · Subnetting</span>
+      <span class="tag tag-green">VLANs · VPNs</span>
+      <span class="tag tag-green">Cisco IOS</span>
+      <span class="tag tag-blue">AWS</span>
+      <span class="tag tag-blue">Azure</span>
+      <span class="tag tag-blue">Docker</span>
+      <span class="tag tag-blue">VMware</span>
+      <span class="tag tag-gray">Python</span>
+      <span class="tag tag-gray">Bash</span>
+      <span class="tag tag-gray">PowerShell</span>
+      <span class="tag tag-gray">MySQL</span>
+      <span class="tag tag-gray">PostgreSQL</span>
+      <span class="tag tag-gray">React</span>
+      <span class="tag tag-gray">JavaScript</span>
+      <span class="tag tag-gray">PHP</span>
+      <span class="tag tag-gray">Java</span>
+      <span class="tag tag-gray">HTML · CSS</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-solid">Contact me</a>
+      <a href="https://github.com/anthlab" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
+      <a href="#" class="btn btn-outline">Download CV ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card coming reveal reveal-delay-1">
+      <div class="project-top"><span class="project-icon">🔒</span><span class="coming-label">// coming soon</span></div>
+      <div class="project-title">Home Lab — Segmented Network</div>
+      <div class="project-desc">Virtualized environment with VLANs, perimeter firewall and Active Directory. Configuration and hardening documentation.</div>
+      <div class="project-tags"><span class="ptag">GNS3</span><span class="ptag">Cisco IOS</span><span class="ptag">VLANs</span><span class="ptag">Active Directory</span></div>
+    </div>
+    <div class="project-card coming reveal reveal-delay-2">
+      <div class="project-top"><span class="project-icon">🐍</span><span class="coming-label">// coming soon</span></div>
+      <div class="project-title">Network Audit Script</div>
+      <div class="project-desc">Python tool for port scanning, active service detection and basic security report generation.</div>
+      <div class="project-tags"><span class="ptag">Python</span><span class="ptag">Nmap</span><span class="ptag">Networking</span></div>
+    </div>
+    <div class="project-card coming reveal reveal-delay-3">
+      <div class="project-top"><span class="project-icon">☁️</span><span class="coming-label">// coming soon</span></div>
+      <div class="project-title">AWS Infrastructure with IAM</div>
+      <div class="project-desc">Cloud environment deployment with least-privilege policies, security groups and basic monitoring via CloudWatch.</div>
+      <div class="project-tags"><span class="ptag">AWS</span><span class="ptag">IAM</span><span class="ptag">EC2</span><span class="ptag">CloudWatch</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list reveal">
+
+    <div class="exp-item">
+      <span class="exp-role">IT Systems &amp; Junior DevOps Engineer</span>
+      <div class="exp-meta">
+        <span class="exp-company">Hackapet</span>
+
+      </div>
+      <div class="exp-right">
+        <span class="exp-period">Jun 2024 – Present</span>
+        <span class="exp-type type-volunteer">Volunteer</span>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <span class="exp-role">Web Developer</span>
+      <div class="exp-meta">
+        <span class="exp-company">RANKTOP®</span>
+
+      </div>
+      <div class="exp-right">
+        <span class="exp-period">Mar – Jul 2025</span>
+        <span class="exp-type type-internship">Internship</span>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <span class="exp-role">IT Systems &amp; Network Technician</span>
+      <div class="exp-meta">
+        <span class="exp-company">Codenautas</span>
+
+      </div>
+      <div class="exp-right">
+        <span class="exp-period">Feb – Jul 2023</span>
+        <span class="exp-type type-internship">Internship</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">About me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>Junior technician with a <strong>dual degree in ASIR and DAW</strong>, focused on systems infrastructure, enterprise networking and security. My profile combines the perspective of a systems administrator with real development and scripting capabilities.</p>
+      <p>Building a certification roadmap oriented towards cybersecurity: AWS Cloud Practitioner and CompTIA Security+ as next steps.</p>
+      <p>I'm drawn to environments where security is part of the design, not an afterthought: identity management, network segmentation, traffic analysis and system hardening.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-row"><span class="stat-label">location</span><span class="stat-val">Valencia, Spain</span></div>
+      <div class="stat-row"><span class="stat-label">age</span><span class="stat-val">23</span></div>
+      <div class="stat-row"><span class="stat-label">education</span><span class="stat-val">HND · ASIR + DAW</span></div>
+      <div class="stat-row"><span class="stat-label">goal</span><span class="stat-val">Junior Cybersecurity</span></div>
+      <div class="stat-row"><span class="stat-label">availability</span><span class="stat-val">Actively looking</span></div>
+      <div class="stat-row"><span class="stat-label">github</span><span class="stat-val">github.com/anthlab</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-list reveal">
+    <div class="edu-item">
+      <span class="edu-year">2023 – 2025</span>
+      <div class="edu-content">
+        <div class="edu-degree">HND in Web Application Development (DAW)</div>
+        <div class="edu-school">Formación Profesional Superior · Valencia, Spain</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <span class="edu-year">2021 – 2023</span>
+      <div class="edu-content">
+        <div class="edu-degree">HND in Network Systems Administration (ASIR)</div>
+        <div class="edu-school">Formación Profesional Superior · Valencia, Spain</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Technical skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-group"><div class="skill-group-label">Systems</div><ul class="skill-list"><li>Windows Server</li><li>Linux (Debian / CentOS)</li><li>Active Directory</li><li>Virtualization (VMware / Hyper-V)</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Networking</div><ul class="skill-list"><li>TCP/IP · Subnetting</li><li>Routing &amp; Switching</li><li>Cisco IOS</li><li>VLANs · VPNs</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Cloud &amp; DevOps</div><ul class="skill-list"><li>AWS (EC2, S3, IAM)</li><li>Microsoft Azure</li><li>Docker</li><li>Infrastructure as Code</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Scripting &amp; Dev</div><ul class="skill-list"><li>Python</li><li>Bash · PowerShell</li><li>Java · PHP</li><li>HTML · CSS · JS · React</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Databases</div><ul class="skill-list"><li>MySQL</li><li>PostgreSQL</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Cybersecurity</div><ul class="skill-list"><li>OWASP fundamentals</li><li>Network traffic analysis</li><li>System hardening</li><li>Identity management (IAM)</li></ul></div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-list reveal">
+    <div class="cert-row">
+      <div class="cert-logo">🌐</div>
+      <div class="cert-info"><div class="cert-name">CCNA 200-301</div><div class="cert-issuer">Cisco · Cisco Certified Network Associate</div></div>
+      <div class="cert-progress-wrap"><span class="cert-badge badge-active">Certified</span><div class="cert-bar-bg"><div class="cert-bar" data-width="100"></div></div></div>
+    </div>
+    <div class="cert-row">
+      <div class="cert-logo">☁️</div>
+      <div class="cert-info"><div class="cert-name">AWS Cloud Practitioner</div><div class="cert-issuer">Amazon Web Services · CLF-C02</div></div>
+      <div class="cert-progress-wrap"><span class="cert-badge badge-active">In progress</span><div class="cert-bar-bg"><div class="cert-bar" data-width="40"></div></div></div>
+    </div>
+    <div class="cert-row">
+      <div class="cert-logo">🔐</div>
+      <div class="cert-info"><div class="cert-name">CompTIA Security+</div><div class="cert-issuer">CompTIA · SY0-701</div></div>
+      <div class="cert-progress-wrap"><span class="cert-badge badge-planned">Roadmap 2026–27</span><div class="cert-bar-bg"><div class="cert-bar" data-width="0"></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">07</span>
+    <h2 class="section-title">Interesting Articles</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="carousel-wrap reveal">
+    <div class="carousel-track-outer">
+      <div class="carousel-track" id="carousel-track">
+
+        <a href="https://www.gartner.com/en/articles/top-cybersecurity-trends-2026" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">Gartner</span><span class="blog-card-date">Apr 2026</span></div>
+          <div class="blog-card-title">Top Cybersecurity Trends CISOs Must Act on in 2026</div>
+          <div class="blog-card-desc">AI expansion, regulatory fragmentation and geopolitical pressure are reshaping enterprise risk. Where security leaders must focus now.</div>
+          <span class="blog-card-tag">Industry trends</span>
+        </a>
+
+        <a href="https://ine.com/newsroom/ine-releases-top-5-network-security-trends-of-2026" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">INE Security</span><span class="blog-card-date">Jan 2026</span></div>
+          <div class="blog-card-title">Top 5 Network Security Trends of 2026</div>
+          <div class="blog-card-desc">Identity is now the most targeted attack vector. How AI, Zero Trust and IAM are redefining network defense.</div>
+          <span class="blog-card-tag">Networking</span>
+        </a>
+
+        <a href="https://reports.weforum.org/docs/WEF_Global_Cybersecurity_Outlook_2026.pdf" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">World Economic Forum</span><span class="blog-card-date">2026</span></div>
+          <div class="blog-card-title">Global Cybersecurity Outlook 2026</div>
+          <div class="blog-card-desc">73% of professionals were affected by cyber-enabled fraud in 2025. The WEF's full annual report on the global threat landscape.</div>
+          <span class="blog-card-tag">Threat landscape</span>
+        </a>
+
+        <a href="https://www.darkreading.com/threat-intelligence/cybersecurity-predictions-for-2026-navigating-the-future-of-digital-threats" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">Dark Reading</span><span class="blog-card-date">Jan 2026</span></div>
+          <div class="blog-card-title">Cybersecurity Predictions for 2026: The Future of Digital Threats</div>
+          <div class="blog-card-desc">AI-driven social engineering is reaching a new level of sophistication. Experts discuss the threats that will define the year ahead.</div>
+          <span class="blog-card-tag">Threat intelligence</span>
+        </a>
+
+        <a href="https://www.globaltechcouncil.org/cyber-security/cybersecurity-facts-2026/" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">Global Tech Council</span><span class="blog-card-date">Jun 2026</span></div>
+          <div class="blog-card-title">Cybersecurity Facts for 2026: Key Trends & Data</div>
+          <div class="blog-card-desc">Ransomware groups generated $529M in Q1 2026 alone — a 39% year-on-year rise. Key data points every security professional should know.</div>
+          <span class="blog-card-tag">Data & stats</span>
+        </a>
+
+        <a href="https://www.securityweek.com/cyber-insights-2026-zero-trust-and-following-the-path/" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">SecurityWeek</span><span class="blog-card-date">Jan 2026</span></div>
+          <div class="blog-card-title">Cyber Insights 2026: Zero Trust and Following the Path</div>
+          <div class="blog-card-desc">Zero Trust is not a product — it's a destination. Security experts debate timelines, structural barriers and why even partial adoption dramatically improves your posture.</div>
+          <span class="blog-card-tag">Zero Trust</span>
+        </a>
+
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <div class="carousel-dots" id="carousel-dots"></div>
+      <div class="carousel-arrows">
+        <button class="carousel-btn" id="carousel-prev">&#8592;</button>
+        <button class="carousel-btn" id="carousel-next">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">08</span>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-intro">
+      <p>Actively looking for <strong>junior roles in cybersecurity, systems administration or networking</strong>. Open to internships and technical collaborations too.</p>
+      <br>
+      <p>If you work in the tech/sec sector and think we'd be a good fit, reach out directly.</p>
+    </div>
+    <div class="contact-links">
+      <a href="https://github.com/anthlab" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-icon">⌥</span><span class="contact-link-label">GitHub</span><span class="contact-link-val">github.com/anthlab</span>
+      </a>
+      <a href="https://www.linkedin.com/in/anthony-zamora-mart%C3%ADnez-5382b9235" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-icon">💼</span><span class="contact-link-label">LinkedIn</span><span class="contact-link-val">anthony-zamora-martínez</span>
+      </a>
+      <a href="mailto:anthonyzamoram18@hotmail.com" class="contact-link">
+        <span class="contact-link-icon">✉</span><span class="contact-link-label">Email</span><span class="contact-link-val">anthonyzamoram18@hotmail.com</span>
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-link-icon">📄</span><span class="contact-link-label">Curriculum vitae</span><span class="contact-link-val">Download PDF</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">anthlab · <span>systems &amp; cybersecurity</span> · valencia 2026</span>
+</footer>
+
+<script>
+  // ── CUSTOM CURSOR ──
+  const cur = document.getElementById('cursor');
+  let cx = 0, cy = 0;
+  document.addEventListener('mousemove', e => {
+    cx = e.clientX; cy = e.clientY;
+    cur.style.left = cx + 'px';
+    cur.style.top  = cy + 'px';
+  });
+
+  // ── PROGRESS BAR ──
+  const pbar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', () => { pbar.style.width = (window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100) + '%'; });
+
+  // ── NAV SHADOW ──
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => { navbar.classList.toggle('scrolled', window.scrollY > 20); });
+
+
+
+  // ── TYPING EFFECT ──
+  const roles = ['Systems & Cybersecurity', 'Network Administrator', 'Security Enthusiast', 'Junior DevOps Engineer'];
+  let rIdx = 0, cIdx = 0, deleting = false;
+  const roleEl = document.getElementById('typing-role');
+  function type() {
+    const cur2 = roles[rIdx];
+    roleEl.textContent = deleting ? cur2.slice(0, cIdx-1) : cur2.slice(0, cIdx+1);
+    deleting ? cIdx-- : cIdx++;
+    if (!deleting && cIdx === cur2.length) { deleting = true; setTimeout(type, 1800); return; }
+    if (deleting && cIdx === 0) { deleting = false; rIdx = (rIdx+1) % roles.length; }
+    setTimeout(type, deleting ? 45 : 80);
+  }
+  setTimeout(type, 1000);
+
+  // ── COUNTERS ──
+  const counters = document.querySelectorAll('.counter-num');
+  let counted = false;
+  function runCounters() {
+    if (counted) return;
+    const hero = document.querySelector('.hero-counters');
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    if (rect.top < window.innerHeight) {
+      counted = true;
+      counters.forEach(el => {
+        const target = +el.dataset.target;
+        let count = 0;
+        const step = Math.ceil(target / 30);
+        const timer = setInterval(() => {
+          count = Math.min(count + step, target);
+          el.textContent = count + (target > 5 ? '+' : '');
+          if (count >= target) clearInterval(timer);
+        }, 40);
+      });
+    }
+  }
+  window.addEventListener('scroll', runCounters);
+  runCounters();
+
+  // ── SCROLL REVEAL ──
+  const reveals = document.querySelectorAll('.reveal');
+  const revObs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revObs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => revObs.observe(el));
+
+  // ── CERT PROGRESS BARS ──
+  const certObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.cert-bar').forEach(b => { b.style.width = b.dataset.width + '%'; });
+        certObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.certs-list').forEach(el => certObs.observe(el));
+
+
+
+  // ── CANVAS PARTICLES ──
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [], W, H;
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+  resize();
+  window.addEventListener('resize', () => { resize(); init(); });
+  function init() {
+    particles = [];
+    const cols = Math.floor(W/60), rows = Math.floor(H/60);
+    for (let i = 0; i <= cols; i++) for (let j = 0; j <= rows; j++) {
+      particles.push({ x:(i/cols)*W, y:(j/rows)*H, ox:(i/cols)*W, oy:(j/rows)*H, vx:0, vy:0, size:Math.random()*1.5+0.5, op:Math.random()*0.4+0.1 });
+    }
+  }
+  init();
+  let mx = -1000, my = -1000;
+  canvas.parentElement.addEventListener('mousemove', e => { const r = canvas.getBoundingClientRect(); mx = e.clientX-r.left; my = e.clientY-r.top; });
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p => {
+      const dx=mx-p.x, dy=my-p.y, dist=Math.sqrt(dx*dx+dy*dy), force=Math.max(0,80-dist)/80;
+      p.vx += (dist>0?-dx/dist:0)*force*0.4; p.vy += (dist>0?-dy/dist:0)*force*0.4;
+      p.vx += (p.ox-p.x)*0.04; p.vy += (p.oy-p.y)*0.04;
+      p.vx *= 0.85; p.vy *= 0.85; p.x += p.vx; p.y += p.vy;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+      ctx.fillStyle = `rgba(0,212,170,${p.op})`; ctx.fill();
+    });
+    for (let i=0;i<particles.length;i++) for (let j=i+1;j<particles.length;j++) {
+      const a=particles[i],b=particles[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<65){ ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.strokeStyle=`rgba(0,212,170,${0.06*(1-d/65)})`; ctx.lineWidth=0.5; ctx.stroke(); }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  // ── CAROUSEL (infinite loop) ──
+  (function() {
+    const track    = document.getElementById('carousel-track');
+    const dotsWrap = document.getElementById('carousel-dots');
+    const btnPrev  = document.getElementById('carousel-prev');
+    const btnNext  = document.getElementById('carousel-next');
+    if (!track) return;
+
+    const origCards = Array.from(track.querySelectorAll('.blog-card'));
+    const total     = origCards.length;
+
+    // Clone first and last groups for infinite loop
+    origCards.forEach(c => track.appendChild(c.cloneNode(true)));
+    origCards.forEach(c => track.insertBefore(c.cloneNode(true), track.firstChild));
+
+    const allCards = () => track.querySelectorAll('.blog-card');
+    const visible  = () => window.innerWidth <= 680 ? 1 : 3;
+    let current    = total; // start at real first (after clones)
+    let isTransitioning = false;
+    let autoTimer;
+
+    // Build 3 dots — one per step, cycling
+    const numDots = 3;
+    for (let i = 0; i < numDots; i++) {
+      const d = document.createElement('button');
+      d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dotsWrap.appendChild(d);
+    }
+
+    function updateDots() {
+      const realIdx = ((current - total) % total + total) % total;
+      const dotIdx  = realIdx % numDots;
+      dotsWrap.querySelectorAll('.carousel-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === dotIdx);
+      });
+    }
+
+    function getCardWidth() {
+      const cards = allCards();
+      return cards[0] ? cards[0].offsetWidth + 16 : 0;
+    }
+
+    function setPosition(animated) {
+      track.style.transition = animated ? 'transform 0.45s cubic-bezier(0.4,0,0.2,1)' : 'none';
+      track.style.transform  = `translateX(-${current * getCardWidth()}px)`;
+    }
+
+    function goTo(idx, resetTimer) {
+      if (isTransitioning) return;
+      isTransitioning = true;
+      current = idx;
+      setPosition(true);
+      updateDots();
+      if (resetTimer) startAuto();
+    }
+
+    track.addEventListener('transitionend', () => {
+      isTransitioning = false;
+      // Jump silently if we've gone into clone territory
+      if (current >= total * 2) { current = total;      setPosition(false); }
+      if (current < total)      { current = total * 2 - visible(); setPosition(false); }
+    });
+
+    btnNext.addEventListener('click', () => { goTo(current + 1, true); });
+    btnPrev.addEventListener('click', () => { goTo(current - 1, true); });
+
+    function startAuto() {
+      clearInterval(autoTimer);
+      autoTimer = setInterval(() => goTo(current + 1, false), 10000);
+    }
+
+    // Init
+    setPosition(false);
+    updateDots();
+    startAuto();
+
+    window.addEventListener('resize', () => setPosition(false));
+
+    // ── DRAG / SWIPE ──
+    let dragStartX = 0, dragDeltaX = 0, dragging = false;
+
+    track.addEventListener('mousedown', e => {
+      dragging   = true;
+      dragStartX = e.clientX;
+      dragDeltaX = 0;
+      track.style.transition = 'none';
+      clearInterval(autoTimer);
+    });
+
+    track.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      dragDeltaX = e.clientX - dragStartX;
+      track.style.transform = `translateX(${-current * getCardWidth() + dragDeltaX}px)`;
+    });
+
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      const threshold = getCardWidth() * 0.25;
+      if (dragDeltaX < -threshold)      goTo(current + 1, true);
+      else if (dragDeltaX > threshold)  goTo(current - 1, true);
+      else { setPosition(true); startAuto(); }
+    }
+
+    track.addEventListener('mouseup',    endDrag);
+    track.addEventListener('mouseleave', endDrag);
+
+    // Touch support
+    track.addEventListener('touchstart', e => {
+      dragStartX = e.touches[0].clientX;
+      dragDeltaX = 0;
+      dragging   = true;
+      track.style.transition = 'none';
+      clearInterval(autoTimer);
+    }, { passive: true });
+
+    track.addEventListener('touchmove', e => {
+      if (!dragging) return;
+      dragDeltaX = e.touches[0].clientX - dragStartX;
+      track.style.transform = `translateX(${-current * getCardWidth() + dragDeltaX}px)`;
+    }, { passive: true });
+
+    track.addEventListener('touchend', endDrag);
+
+    // Prevent accidental link clicks after drag
+    track.addEventListener('click', e => {
+      if (Math.abs(dragDeltaX) > 5) e.preventDefault();
+    }, true);
+
+  })();
+</script>
+</body>
+</html>
