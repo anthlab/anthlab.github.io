@@ -18,6 +18,8 @@ HTML, CSS and JavaScript. Hosted on GitHub Pages.
 - `assets/` — images and CV.
 - `projects/` — individual project pages.
 
+The Cybersecurity Toolkit has a project notes page at `projects/cybersecurity-toolkit/`. It describes the first password generator module and the implementation choices so far.
+
 ## Contact
 
 You can find my contact details and download my CV on the website.

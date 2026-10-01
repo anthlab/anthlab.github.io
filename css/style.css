@@ -145,6 +145,7 @@
   }
   .hero h1 .name { color: var(--text); }
   .hero h1 .role { color: var(--accent); }
+  .hero h1 .hero-focus { display: block; font-size: 0.42em; line-height: 1.4; color: var(--text2); font-weight: 400; letter-spacing: 0; margin-top: 1rem; }
   .typing-cursor {
     display: inline-block; width: 3px; height: 0.85em;
     background: var(--accent); vertical-align: baseline; margin-left: 2px;
@@ -244,6 +245,8 @@
     border: 1px solid rgba(56,189,248,0.18); padding: 0.18rem 0.5rem; border-radius: 3px;
   }
   .coming-label { font-family: 'Courier New', monospace; font-size: 0.7rem; color: var(--text2); letter-spacing: 0.08em; text-transform: uppercase; }
+  .project-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--accent); font-size: 0.8rem; text-decoration: none; margin-top: 0.5rem; align-self: flex-start; }
+  .project-link:hover { text-decoration: underline; text-underline-offset: 4px; }
 
   /* ── EXPERIENCE — compact cards ── */
   .exp-list {
@@ -283,6 +286,8 @@
     font-size: 0.8rem; color: var(--accent);
     font-family: 'Courier New', monospace;
   }
+  .exp-details { grid-column: 1 / -1; grid-row: 3; margin: 0.6rem 0 0; padding-left: 1.1rem; color: var(--text2); font-size: 0.8rem; line-height: 1.75; }
+  .exp-details li + li { margin-top: 0.3rem; }
 
   .exp-right {
     grid-column: 2; grid-row: 1 / 3;
@@ -534,4 +539,7 @@
     .cert-row { flex-wrap: wrap; gap: 0.75rem; }
     .cert-progress-wrap { width: 100%; align-items: flex-start; min-width: unset; }
     .cert-bar-bg { width: 100%; }
+    .exp-item { grid-template-columns: minmax(0, 1fr); gap: 0.5rem; padding: 1.1rem 1.25rem; }
+    .exp-right { grid-column: 1; grid-row: 3; flex-direction: row; justify-content: flex-start; align-items: center; flex-wrap: wrap; }
+    .exp-details { grid-row: 4; margin-top: 0.35rem; }
   }

@@ -17,45 +17,6 @@
 
 
 
-  // ── TYPING EFFECT ──
-  const roles = ['Systems & Cybersecurity', 'Network Administrator', 'Security Enthusiast', 'Junior DevOps Engineer'];
-  let rIdx = 0, cIdx = 0, deleting = false;
-  const roleEl = document.getElementById('typing-role');
-  function type() {
-    const cur2 = roles[rIdx];
-    roleEl.textContent = deleting ? cur2.slice(0, cIdx-1) : cur2.slice(0, cIdx+1);
-    deleting ? cIdx-- : cIdx++;
-    if (!deleting && cIdx === cur2.length) { deleting = true; setTimeout(type, 1800); return; }
-    if (deleting && cIdx === 0) { deleting = false; rIdx = (rIdx+1) % roles.length; }
-    setTimeout(type, deleting ? 45 : 80);
-  }
-  setTimeout(type, 1000);
-
-  // ── COUNTERS ──
-  const counters = document.querySelectorAll('.counter-num');
-  let counted = false;
-  function runCounters() {
-    if (counted) return;
-    const hero = document.querySelector('.hero-counters');
-    if (!hero) return;
-    const rect = hero.getBoundingClientRect();
-    if (rect.top < window.innerHeight) {
-      counted = true;
-      counters.forEach(el => {
-        const target = +el.dataset.target;
-        let count = 0;
-        const step = Math.ceil(target / 30);
-        const timer = setInterval(() => {
-          count = Math.min(count + step, target);
-          el.textContent = count + (target > 5 ? '+' : '');
-          if (count >= target) clearInterval(timer);
-        }, 40);
-      });
-    }
-  }
-  window.addEventListener('scroll', runCounters);
-  runCounters();
-
   // ── SCROLL REVEAL ──
   const reveals = document.querySelectorAll('.reveal');
   const revObs = new IntersectionObserver(entries => {
