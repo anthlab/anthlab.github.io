@@ -1,25 +1,25 @@
 # anthlab.github.io
 
-My personal portfolio: [anthlab.github.io](https://anthlab.github.io/)
+Mi portfolio personal: [anthlab.github.io](https://anthlab.github.io/)
 
-I'm Anthony, an ASIR and DAW graduate based in Valencia. I started a cybersecurity specialization at CIPFP Cheste in October 2026 and I'm currently preparing for the CCNA.
+Soy Anthony, titulado en ASIR y DAW y residente en Valencia. En octubre de 2026 empecé el Curso de Especialización en Ciberseguridad en Entornos de las Tecnologías de la Información en CIPFP Cheste y actualmente estoy preparando el CCNA.
 
-This website brings together my experience, education and technical interests. I'll be adding projects and write-ups as I build them, with a focus on networking, systems administration and cybersecurity.
+Esta web reúne mi experiencia, formación e intereses técnicos. Iré añadiendo proyectos y documentación a medida que los desarrolle, con especial atención a redes, administración de sistemas y ciberseguridad.
 
-## Built with
+## Tecnologías utilizadas
 
-HTML, CSS and JavaScript. Hosted on GitHub Pages.
+HTML, CSS y JavaScript. Alojado en GitHub Pages.
 
-## Files
+## Archivos
 
-- `index.html` — page content and structure.
-- `css/style.css` — styles and responsive layout.
-- `js/main.js` — animations and interactions.
-- `assets/` — images and CV.
-- `projects/` — individual project pages.
+- `index.html` — contenido y estructura de la página.
+- `css/style.css` — estilos y diseño responsive.
+- `js/main.js` — animaciones e interacciones.
+- `assets/` — imágenes y CV.
+- `projects/` — páginas individuales de los proyectos.
 
-The Cybersecurity Toolkit has a project notes page at `projects/cybersecurity-toolkit/`. It describes the first password generator module and the implementation choices so far.
+El kit de herramientas de ciberseguridad dispone de una página de notas del proyecto en `projects/cybersecurity-toolkit/`. En ella se describe el primer módulo, un generador de contraseñas, y las decisiones de implementación tomadas hasta ahora.
 
-## Contact
+## Contacto
 
-You can find my contact details and download my CV on the website.
+Puedes encontrar mis datos de contacto y descargar mi CV desde la web.
