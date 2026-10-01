@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Anthony Zamora — ASIR and DAW graduate, cybersecurity student at CIPFP Cheste. Projects, experience and contact.">
+<title>anthlab · Systems & Cybersecurity</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="cursor">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 2L4 18L8.5 13.5L12 20L14.5 19L11 12.5L17 12.5L4 2Z" fill="#00d4aa" stroke="#00d4aa" stroke-width="0.5" stroke-linejoin="round"/>
+  </svg>
+</div>
+<div id="progress-bar"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo"><span>~/</span>anthlab</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certs">Certs</a></li>
+    <li><a href="#blog">Articles</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="https://github.com/anthlab" target="_blank" rel="noopener" class="nav-gh">github/anthlab ↗</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="home" class="hero-wrap">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero">
+    <div class="hero-status"><span class="dot"></span>cybersecurity student · seeking internships · valencia, spain</div>
+    <h1>
+      <span class="name">Anthony</span><br>
+      <span class="role">Cybersecurity student</span>
+      <span class="hero-focus">Systems &amp; Networking</span>
+    </h1>
+    <p class="hero-desc">I'm Anthony, based in Valencia. I have completed ASIR and DAW and started studying cybersecurity at CIPFP Cheste in October 2026. I'm looking for an internship to gain experience in the field.</p>
+    <div class="hero-tags">
+      <span class="tag tag-green">Windows Server</span>
+      <span class="tag tag-green">Linux</span>
+      <span class="tag tag-green">TCP/IP</span>
+      <span class="tag tag-green">Cisco IOS</span>
+      <span class="tag tag-gray">Python</span>
+      <span class="tag tag-gray">Bash</span>
+      <span class="tag tag-gray">JavaScript</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#contact" class="btn btn-solid">Contact me</a>
+      <a href="https://github.com/anthlab" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
+      <a href="assets/documents/CV-Anthony_Zamora.pdf" download class="btn btn-outline">Download CV ↗</a>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Projects</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal reveal-delay-1">
+      <div class="project-top"><span class="project-icon">🔐</span><span class="coming-label">In development</span></div>
+      <div class="project-title">Cybersecurity Toolkit</div>
+      <div class="project-desc">Security tools that run in the browser. The password generator is the first working module. Next, I plan to add password analysis, IP analysis and checks for suspicious URL patterns.</div>
+      <div class="project-tags"><span class="ptag">HTML</span><span class="ptag">CSS</span><span class="ptag">JavaScript</span><span class="ptag">Web Crypto</span></div>
+      <a class="project-link" href="projects/cybersecurity-toolkit/">Project notes <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="project-card coming reveal reveal-delay-2">
+      <div class="project-top"><span class="project-icon">📋</span><span class="coming-label">Planned</span></div>
+      <div class="project-title">SOC Log Analyzer</div>
+      <div class="project-desc">A tool to read authentication logs, group failed logins by IP and flag possible brute-force attempts. I plan to add a dashboard to filter events and review the results.</div>
+      <div class="project-tags"><span class="ptag">Python</span><span class="ptag">Log Analysis</span><span class="ptag">Streamlit</span></div>
+    </div>
+    <div class="project-card coming reveal reveal-delay-3">
+      <div class="project-top"><span class="project-icon">🌐</span><span class="coming-label">Planned</span></div>
+      <div class="project-title">Network Security Monitor</div>
+      <div class="project-desc">A view of active connections, listening ports and their associated processes. The aim is to practise network analysis and write rules for connections that need a closer look.</div>
+      <div class="project-tags"><span class="ptag">Python</span><span class="ptag">psutil</span><span class="ptag">Networking</span></div>
+    </div>
+    <div class="project-card coming reveal reveal-delay-1">
+      <div class="project-top"><span class="project-icon">🐧</span><span class="coming-label">Planned</span></div>
+      <div class="project-title">Linux Security Auditor</div>
+      <div class="project-desc">A script to check users, SSH settings and file permissions on a Linux VM. I plan to export the findings as a report with suggestions for each issue.</div>
+      <div class="project-tags"><span class="ptag">Python</span><span class="ptag">Linux</span><span class="ptag">SSH</span></div>
+    </div>
+    <div class="project-card coming reveal reveal-delay-2">
+      <div class="project-top"><span class="project-icon">🛡️</span><span class="coming-label">Planned</span></div>
+      <div class="project-title">Mini-SIEM / Blue Team Lab</div>
+      <div class="project-desc">A longer-term lab project combining log collection, detection rules and alerts. I want to simulate incidents in a local VM environment and document how I detect, investigate and respond to them.</div>
+      <div class="project-tags"><span class="ptag">Python</span><span class="ptag">Linux</span><span class="ptag">Detection Rules</span><span class="ptag">Virtual Machines</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Experience</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="exp-list reveal">
+
+    <div class="exp-item">
+      <span class="exp-role">IT Systems &amp; Junior DevOps Engineer</span>
+      <div class="exp-meta">
+        <span class="exp-company">Hackapet</span>
+
+      </div>
+      <div class="exp-right">
+        <span class="exp-period">Jun 2024 – Present</span>
+        <span class="exp-type type-volunteer">Volunteer</span>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <span class="exp-role">Web Developer</span>
+      <div class="exp-meta">
+        <span class="exp-company">RANKTOP®</span>
+
+      </div>
+      <div class="exp-right">
+        <span class="exp-period">Mar – Jul 2025</span>
+        <span class="exp-type type-internship">Internship</span>
+      </div>
+      <ul class="exp-details">
+        <li>Developed web applications with Python and JavaScript.</li>
+        <li>Worked on input validation, access controls, usability and application performance.</li>
+      </ul>
+    </div>
+
+    <div class="exp-item">
+      <span class="exp-role">IT Systems &amp; Network Technician</span>
+      <div class="exp-meta">
+        <span class="exp-company">Codenautas</span>
+
+      </div>
+      <div class="exp-right">
+        <span class="exp-period">Feb – Jul 2023</span>
+        <span class="exp-type type-internship">Internship</span>
+      </div>
+      <ul class="exp-details">
+        <li>Maintained systems and web infrastructure, including security updates.</li>
+        <li>Monitored services and resolved technical incidents.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">About me</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid reveal">
+    <div class="about-text">
+      <p>I completed two <strong>Ciclos Formativos de Grado Superior (CFGS)</strong>: <strong>ASIR</strong> in systems and networking, and <strong>DAW</strong> in web development. My experience so far includes internships in systems and web development, as well as volunteer work at Hackapet.</p>
+      <p>In <strong>October 2026</strong>, I started the <strong>Specialization in Cybersecurity in Information Technology Environments at CIPFP Cheste</strong>. I'm looking for an internship where I can work with a security team, learn how they investigate alerts and help with everyday tasks.</p>
+      <p>I'm also preparing for the <strong>CCNA</strong> and working on a <strong>Cybersecurity Toolkit</strong>, starting with a browser-based password generator. I plan to take <strong>CompTIA Security+ in 2027–2028</strong>.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-row"><span class="stat-label">location</span><span class="stat-val">Valencia, Spain</span></div>
+      <div class="stat-row"><span class="stat-label">age</span><span class="stat-val">23</span></div>
+      <div class="stat-row"><span class="stat-label">education</span><span class="stat-val">CFGS · ASIR + DAW</span></div>
+      <div class="stat-row"><span class="stat-label">goal</span><span class="stat-val">Junior Cybersecurity</span></div>
+      <div class="stat-row"><span class="stat-label">availability</span><span class="stat-val">Seeking internships</span></div>
+      <div class="stat-row"><span class="stat-label">github</span><span class="stat-val">github.com/anthlab</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Education</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-list reveal">
+    <div class="edu-item">
+      <span class="edu-year">Oct 2026 – Present</span>
+      <div class="edu-content">
+        <div class="edu-degree">Specialization in Cybersecurity in Information Technology Environments</div>
+        <div class="edu-school">CIPFP Cheste · Cheste, Valencia, Spain · In progress</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <span class="edu-year">2023 – 2025</span>
+      <div class="edu-content">
+        <div class="edu-degree">CFGS · Desarrollo de Aplicaciones Web (DAW)</div>
+        <div class="edu-school">IES Juan de Garay · Ciclo Formativo de Grado Superior · Valencia, Spain</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <span class="edu-year">2021 – 2023</span>
+      <div class="edu-content">
+        <div class="edu-degree">CFGS · Administración de Sistemas Informáticos en Red (ASIR)</div>
+        <div class="edu-school">IES Juan de Garay · Ciclo Formativo de Grado Superior · Valencia, Spain</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Technical skills</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid reveal">
+    <div class="skill-group"><div class="skill-group-label">Systems</div><ul class="skill-list"><li>Windows Server</li><li>Linux (Debian / CentOS)</li><li>Active Directory</li><li>Virtualization (VMware / Hyper-V)</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Networking</div><ul class="skill-list"><li>TCP/IP · Subnetting</li><li>Routing &amp; Switching</li><li>Cisco IOS</li><li>VLANs · VPNs</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Cloud &amp; DevOps</div><ul class="skill-list"><li>AWS (EC2, S3, IAM)</li><li>Microsoft Azure</li><li>Docker</li><li>Infrastructure as Code</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Scripting &amp; Dev</div><ul class="skill-list"><li>Python</li><li>Bash · PowerShell</li><li>Java · PHP</li><li>HTML · CSS · JS · React</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Databases</div><ul class="skill-list"><li>MySQL</li><li>PostgreSQL</li></ul></div>
+    <div class="skill-group"><div class="skill-group-label">Cybersecurity</div><ul class="skill-list"><li>OWASP fundamentals</li><li>Network traffic analysis</li><li>System hardening</li><li>Identity management (IAM)</li></ul></div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section id="certs" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Certifications</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="certs-list reveal">
+    <div class="cert-row">
+      <div class="cert-logo">🌐</div>
+      <div class="cert-info"><div class="cert-name">CCNA 200-301</div><div class="cert-issuer">Cisco · Cisco Certified Network Associate</div></div>
+      <div class="cert-progress-wrap"><span class="cert-badge badge-active">In progress</span></div>
+    </div>
+    <div class="cert-row">
+      <div class="cert-logo">🔐</div>
+      <div class="cert-info"><div class="cert-name">CompTIA Security+</div><div class="cert-issuer">CompTIA</div></div>
+      <div class="cert-progress-wrap"><span class="cert-badge badge-planned">Roadmap 2027–2028</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">07</span>
+    <h2 class="section-title">Articles</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="carousel-wrap reveal">
+    <div class="carousel-track-outer">
+      <div class="carousel-track" id="carousel-track">
+
+        <a href="https://www.gartner.com/en/articles/top-cybersecurity-trends-2026" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">Gartner</span><span class="blog-card-date">Apr 2026</span></div>
+          <div class="blog-card-title">Top Cybersecurity Trends CISOs Must Act on in 2026</div>
+          <div class="blog-card-desc">An overview of cybersecurity trends and the issues facing security teams in 2026.</div>
+          <span class="blog-card-tag">Industry trends</span>
+        </a>
+
+        <a href="https://ine.com/newsroom/ine-releases-top-5-network-security-trends-of-2026" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">INE Security</span><span class="blog-card-date">Jan 2026</span></div>
+          <div class="blog-card-title">Top 5 Network Security Trends of 2026</div>
+          <div class="blog-card-desc">A look at identity security, Zero Trust and other network security topics.</div>
+          <span class="blog-card-tag">Networking</span>
+        </a>
+
+        <a href="https://reports.weforum.org/docs/WEF_Global_Cybersecurity_Outlook_2026.pdf" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">World Economic Forum</span><span class="blog-card-date">2026</span></div>
+          <div class="blog-card-title">Global Cybersecurity Outlook 2026</div>
+          <div class="blog-card-desc">An annual report on cybersecurity risks and the challenges facing organisations.</div>
+          <span class="blog-card-tag">Threat landscape</span>
+        </a>
+
+        <a href="https://www.darkreading.com/threat-intelligence/cybersecurity-predictions-for-2026-navigating-the-future-of-digital-threats" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">Dark Reading</span><span class="blog-card-date">Jan 2026</span></div>
+          <div class="blog-card-title">Cybersecurity Predictions for 2026: The Future of Digital Threats</div>
+          <div class="blog-card-desc">Predictions about social engineering and other threats in 2026.</div>
+          <span class="blog-card-tag">Threat intelligence</span>
+        </a>
+
+        <a href="https://www.globaltechcouncil.org/cyber-security/cybersecurity-facts-2026/" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">Global Tech Council</span><span class="blog-card-date">Jun 2026</span></div>
+          <div class="blog-card-title">Cybersecurity Facts for 2026: Key Trends & Data</div>
+          <div class="blog-card-desc">A collection of cybersecurity statistics and trends for 2026.</div>
+          <span class="blog-card-tag">Data & stats</span>
+        </a>
+
+        <a href="https://www.securityweek.com/cyber-insights-2026-zero-trust-and-following-the-path/" target="_blank" rel="noopener" class="blog-card">
+          <div class="blog-card-meta"><span class="blog-card-source">SecurityWeek</span><span class="blog-card-date">Jan 2026</span></div>
+          <div class="blog-card-title">Cyber Insights 2026: Zero Trust and Following the Path</div>
+          <div class="blog-card-desc">A discussion of Zero Trust and the practical challenges of implementing it.</div>
+          <span class="blog-card-tag">Zero Trust</span>
+        </a>
+
+      </div>
+    </div>
+    <div class="carousel-controls">
+      <div class="carousel-dots" id="carousel-dots"></div>
+      <div class="carousel-arrows">
+        <button class="carousel-btn" id="carousel-prev">&#8592;</button>
+        <button class="carousel-btn" id="carousel-next">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="full-border">
+  <div class="section-header reveal">
+    <span class="section-num">08</span>
+    <h2 class="section-title">Contact</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-grid reveal">
+    <div class="contact-intro">
+      <p>I'm looking for <strong>cybersecurity internships</strong> and am also open to junior roles in systems or networking.</p>
+      <br>
+      <p>If your team has an opening, you can contact me by email or LinkedIn. My CV is available below.</p>
+    </div>
+    <div class="contact-links">
+      <a href="https://github.com/anthlab" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-icon">⌥</span><span class="contact-link-label">GitHub</span><span class="contact-link-val">github.com/anthlab</span>
+      </a>
+      <a href="https://www.linkedin.com/in/anthony-zamora-mart%C3%ADnez-5382b9235" target="_blank" rel="noopener" class="contact-link">
+        <span class="contact-link-icon">💼</span><span class="contact-link-label">LinkedIn</span><span class="contact-link-val">anthony-zamora-martínez</span>
+      </a>
+      <a href="mailto:anthonyzamoram18@hotmail.com" class="contact-link">
+        <span class="contact-link-icon">✉</span><span class="contact-link-label">Email</span><span class="contact-link-val">anthonyzamoram18@hotmail.com</span>
+      </a>
+      <a href="assets/documents/CV-Anthony_Zamora.pdf" download class="contact-link">
+        <span class="contact-link-icon">📄</span><span class="contact-link-label">Curriculum vitae</span><span class="contact-link-val">Download PDF</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-text">anthlab · <span>systems &amp; cybersecurity</span> · valencia 2026</span>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
