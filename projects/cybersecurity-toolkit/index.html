@@ -1,66 +1,405 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Development notes for anthlab's Cybersecurity Toolkit, starting with a browser-based password generator.">
-  <title>Cybersecurity Toolkit · anthlab</title>
-  <link rel="stylesheet" href="../../css/style.css">
-  <link rel="stylesheet" href="../../css/project.css">
-</head>
-<body class="project-page">
-  <nav aria-label="Portfolio navigation">
-    <a href="../../" class="nav-logo"><span>~/</span>anthlab</a>
-    <a href="../../#projects" class="nav-gh">Back to projects ↗</a>
-  </nav>
-  <main class="case-study">
-    <header class="case-header">
-      <p class="case-kicker">01 / PROJECT NOTES</p>
-      <h1>Cybersecurity Toolkit</h1>
-      <p class="case-lead">A collection of security utilities that run in the browser. The first module is a password generator. This page records what is implemented so far and how it works.</p>
-      <span class="tag tag-green">In development</span>
-      <span class="tag tag-gray">HTML · CSS · JavaScript</span>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Toolkit de ciberseguridad"
+    />
+    <meta name="referrer" content="no-referrer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <title>Toolkit de Ciberseguridad · anthlab</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/password-generator.js" defer></script>
+    <script src="js/main.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Ir a la herramienta</a>
+
+    <header class="topbar">
+      <a class="brand" href="./">
+        <span>~/</span>anthlab<span class="brand-divider">/</span
+        ><span class="brand-product">toolkit</span>
+      </a>
+
+      <div class="topbar-right">
+        <span class="version">v0.1</span>
+        <a
+          href="https://anthlab.github.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Portfolio <span aria-hidden="true">↗</span>
+        </a>
+      </div>
     </header>
-    <section class="case-section" aria-labelledby="current-version">
-      <h2 id="current-version">What works now</h2>
-      <p>The first version is ready to test locally in XAMPP. It generates passwords from 8 to 64 characters, using any combination of uppercase letters, lowercase letters, numbers and symbols.</p>
-      <ul>
-        <li>Every selected character type appears at least once.</li>
-        <li>Similar characters such as O, 0, I, l, 1 and | can be excluded.</li>
-        <li>The result can be shown, hidden and copied.</li>
-        <li>Changing the settings clears the previous result until a new password is generated.</li>
-      </ul>
-    </section>
-    <section class="case-section" aria-labelledby="implementation">
-      <h2 id="implementation">How generation works</h2>
-      <ol>
-        <li>The selected types are combined into a character pool.</li>
-        <li><code>crypto.getRandomValues()</code> supplies random bytes from the browser.</li>
-        <li>Byte values that would create an uneven mapping are discarded before characters are selected.</li>
-        <li>A complete candidate is rejected if it is missing any selected type.</li>
-      </ol>
-      <p>The result is sampled uniformly from passwords that meet the settings. The search-space figure counts those possible results; it is not an estimate of how long a password would take to crack.</p>
-    </section>
-    <section class="case-section" aria-labelledby="decisions">
-      <h2 id="decisions">Implementation choices</h2>
-      <h3>Keep passwords on the device</h3>
-      <p>The app has no server, remote scripts or password history. Generation happens in page memory. Copying deliberately places the result on the system clipboard.</p>
-      <h3>Separate the logic from the interface</h3>
-      <p><code>js/password-generator.js</code> handles character pools, generation and search-space calculation. <code>js/main.js</code> handles the form and buttons. This lets the generator be tested without the page.</p>
-      <h3>Handle clipboard restrictions</h3>
-      <p>If automatic copying is unavailable, the app selects the result so it can be copied manually. It never reports a successful copy if the clipboard operation fails.</p>
-    </section>
-    <section class="case-section" aria-labelledby="checks">
-      <h2 id="checks">Checks included</h2>
-      <p>The generator has Node.js tests covering all combinations of character types, minimum and maximum length, exclusions, invalid inputs, rejected random bytes and candidates missing a selected type.</p>
-      <p>The checks also verify the search-space calculation and that generation stops with an error when secure randomness is unavailable.</p>
-    </section>
-    <section class="case-section" aria-labelledby="next-steps">
-      <h2 id="next-steps">Next steps</h2>
-      <p>Add password analysis, then IP analysis and checks for suspicious URL patterns. Screenshots and further testing notes will be added as the interface is reviewed.</p>
-    </section>
-    <a class="btn btn-outline case-back" href="../../#projects">Back to portfolio</a>
-  </main>
-  <footer><span class="footer-text">anthlab · <span>systems &amp; cybersecurity</span></span></footer>
-</body>
+
+    <div class="app-layout">
+      <aside class="sidebar" aria-label="Navegación del toolkit">
+        <p class="eyebrow">HERRAMIENTAS</p>
+
+        <nav class="tool-nav" aria-label="Herramientas">
+          <a class="tool-link active" href="#generator">
+            <span class="tool-icon" aria-hidden="true">⌘</span>
+            <span>Generador de contraseñas</span>
+            <span class="active-dot" aria-hidden="true"></span>
+          </a>
+        </nav>
+
+        <a class="how-link" href="#how-it-works">
+          Cómo funciona <span aria-hidden="true">↓</span>
+        </a>
+
+        <div class="sidebar-note">
+          <span class="local-dot" aria-hidden="true"></span>
+          <div>
+            <strong>Funciona en tu navegador</strong>
+            <p>Sin cuenta y sin guardar contraseñas.</p>
+          </div>
+        </div>
+      </aside>
+
+      <main id="main">
+        <section id="generator" aria-labelledby="page-title">
+          <div class="page-heading">
+            <div class="page-meta">
+              <span class="eyebrow">01 / CONTRASEÑAS</span>
+              <span class="live-badge">Disponible</span>
+            </div>
+
+            <h1 id="page-title">Generador de contraseñas<span>.</span></h1>
+            <p>
+              Elige los ajustes, genera una contraseña y guárdala donde
+              corresponda.
+            </p>
+          </div>
+
+          <noscript>
+            <p class="error-message">
+              Esta herramienta necesita JavaScript. Actívalo y vuelve a cargar
+              la página.
+            </p>
+          </noscript>
+
+          <form id="generator-form">
+            <section class="result-panel" aria-labelledby="result-title">
+              <div class="result-top">
+                <h2 id="result-title" class="eyebrow">TU CONTRASEÑA</h2>
+                <span class="local-label">
+                  <span class="local-dot" aria-hidden="true"></span>
+                   Generada en tu navegador
+                </span>
+              </div>
+
+              <label class="sr-only" for="password-output"
+                >Contraseña generada</label
+              >
+              <input
+                id="password-output"
+                class="password-output"
+                type="text"
+                readonly
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+                placeholder="Pulsa Generar contraseña"
+                aria-describedby="output-hint"
+              />
+
+              <div class="result-bottom">
+                <p id="output-hint">
+                  Aún no se ha generado ninguna contraseña.
+                </p>
+
+                <div class="output-actions">
+                  <button
+                    id="toggle-visibility"
+                    class="small-button"
+                    type="button"
+                    disabled
+                    aria-pressed="false"
+                  >
+                    Ocultar
+                  </button>
+
+                  <button
+                    id="copy-password"
+                    class="small-button copy-button"
+                    type="button"
+                    disabled
+                  >
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                      <rect x="8" y="8" width="12" height="12" rx="2" />
+                      <path
+                        d="M16 8V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4"
+                      />
+                    </svg>
+                    Copiar
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <div class="configuration-grid">
+              <section class="settings-panel" aria-labelledby="settings-title">
+                <div class="panel-heading">
+                  <h2 id="settings-title">Ajustes</h2>
+                  <span class="panel-number">01</span>
+                </div>
+
+                <div class="length-heading">
+                  <label for="password-length">Longitud</label>
+                  <div class="length-input-wrap">
+                    <input
+                      id="password-length"
+                      name="length"
+                      type="number"
+                      min="8"
+                      max="64"
+                      value="20"
+                      step="1"
+                      required
+                      aria-describedby="length-hint"
+                    />
+                    <span>caracteres</span>
+                  </div>
+                </div>
+
+                <label class="sr-only" for="length-slider"
+                  >Longitud de la contraseña</label
+                >
+                <input
+                  id="length-slider"
+                  class="length-slider"
+                  type="range"
+                  min="8"
+                  max="64"
+                  value="20"
+                  step="1"
+                />
+
+                <div id="length-hint" class="range-labels">
+                  <span>8 caracteres</span>
+                  <span>64 caracteres</span>
+                </div>
+
+                <fieldset class="character-settings">
+                  <legend>Tipos de caracteres</legend>
+
+                  <label class="option-row">
+                    <span>
+                      <strong>Mayúsculas</strong>
+                      <small>A–Z</small>
+                    </span>
+                    <input
+                      type="checkbox"
+                      name="group"
+                      value="uppercase"
+                      checked
+                    />
+                    <span class="switch" aria-hidden="true"></span>
+                  </label>
+
+                  <label class="option-row">
+                    <span>
+                      <strong>Minúsculas</strong>
+                      <small>a–z</small>
+                    </span>
+                    <input
+                      type="checkbox"
+                      name="group"
+                      value="lowercase"
+                      checked
+                    />
+                    <span class="switch" aria-hidden="true"></span>
+                  </label>
+
+                  <label class="option-row">
+                    <span>
+                      <strong>Números</strong>
+                      <small>0–9</small>
+                    </span>
+                    <input
+                      type="checkbox"
+                      name="group"
+                      value="numbers"
+                      checked
+                    />
+                    <span class="switch" aria-hidden="true"></span>
+                  </label>
+
+                  <label class="option-row">
+                    <span>
+                      <strong>Símbolos</strong>
+                      <small>! @ # $ % &amp; …</small>
+                    </span>
+                    <input
+                      type="checkbox"
+                      name="group"
+                      value="symbols"
+                      checked
+                    />
+                    <span class="switch" aria-hidden="true"></span>
+                  </label>
+                </fieldset>
+
+                <label class="exclude-option">
+                  <input id="exclude-ambiguous" type="checkbox" />
+                  <span>
+                    Excluir caracteres parecidos
+                    <small
+                      >Evita O, 0, I, l, 1 y | para que sea más fácil
+                      leerla.</small
+                    >
+                  </span>
+                </label>
+
+                <p
+                  id="form-error"
+                  class="error-message"
+                  role="alert"
+                  hidden
+                ></p>
+
+                <button
+                  class="generate-button"
+                  id="generate-button"
+                  type="submit"
+                >
+                  Generar contraseña
+                </button>
+
+                <p
+                  id="status-message"
+                  class="status-message"
+                  role="status"
+                  aria-live="polite"
+                  aria-atomic="true"
+                ></p>
+              </section>
+
+              <section class="details-panel" aria-labelledby="details-title">
+                <div class="panel-heading">
+                  <h2 id="details-title">Resumen</h2>
+                  <span class="panel-number">02</span>
+                </div>
+
+                <div class="configuration-summary">
+                  <div>
+                    <span id="alphabet-size" class="metric-number">94</span>
+                    <span class="metric-label">caracteres disponibles</span>
+                  </div>
+                  <div>
+                    <span id="group-count" class="metric-number">4</span>
+                    <span class="metric-label">tipos seleccionados</span>
+                  </div>
+                </div>
+
+                <div class="space-summary">
+                  <span class="eyebrow">ENTROPÍA APROXIMADA</span>
+                  <p>
+                    <span id="search-space">—</span>
+                    <span class="bits-unit">bits</span>
+                  </p>
+                  <small>
+                    Cálculo orientativo usando la longitud y el número de
+                    caracteres disponibles. No es una predicción del tiempo
+                    necesario para romper la contraseña.
+                  </small>
+                </div>
+
+                <div class="detail-note">
+                  <svg
+                    class="shield-icon"
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                  >
+                    <path d="M12 3 4 6v6c0 4 4 7 8 9 4-2 8-5 8-9V6l-8-3Z" />
+                    <path d="m8 12 3 3 5-6" />
+                  </svg>
+                  <div>
+                    <h3>Se genera en tu dispositivo</h3>
+                    <p>
+                      La aplicación no envía, registra ni guarda las
+                      contraseñas.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="detail-note">
+                  <span class="detail-symbol" aria-hidden="true">↳</span>
+                  <div>
+                    <h3>Incluye los tipos seleccionados</h3>
+                    <p>
+                      La contraseña contiene al menos un carácter de cada tipo
+                      que tengas activado.
+                    </p>
+                  </div>
+                </div>
+
+                <p class="practical-tip">
+                  Usa una contraseña distinta para cada cuenta y guárdala en un
+                  gestor de contraseñas. Al copiarla, pasa al portapapeles del
+                  sistema.
+                </p>
+              </section>
+            </div>
+          </form>
+        </section>
+
+        <section
+          id="how-it-works"
+          class="how-section"
+          aria-labelledby="how-title"
+        >
+          <div class="how-heading">
+            <span class="eyebrow">CÓMO FUNCIONA</span>
+            <h2 id="how-title">Una herramienta sencilla y local.</h2>
+          </div>
+
+          <div class="how-grid">
+            <article>
+              <span class="step-number">01</span>
+              <h3>Eliges los ajustes</h3>
+              <p>
+                Seleccionas la longitud y los tipos de caracteres que quieres
+                utilizar.
+              </p>
+            </article>
+
+            <article>
+              <span class="step-number">02</span>
+              <h3>Se generan valores aleatorios</h3>
+              <p>
+                JavaScript usa Web Crypto para elegir los caracteres sin
+                depender de un servidor.
+              </p>
+            </article>
+
+            <article>
+              <span class="step-number">03</span>
+              <h3>Se mezcla el resultado</h3>
+              <p>
+                Se incluye al menos un carácter de cada tipo seleccionado y
+                después se mezcla la contraseña.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <footer>
+          <span
+            >anthlab <span class="footer-divider">/</span> toolkit de
+            ciberseguridad</span
+          >
+          <span>Hecho para aprender y practicar.</span>
+        </footer>
+      </main>
+    </div>
+  </body>
 </html>
