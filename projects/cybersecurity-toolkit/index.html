@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Herramientas de contraseñas, IPv4 y subredes que funcionan en tu navegador. Un proyecto de anthlab para practicar JavaScript y seguridad."
+      content="Herramientas de contraseñas, IPv4, subredes y URLs que funcionan en tu navegador. Un proyecto de anthlab para practicar JavaScript y seguridad."
     />
     <meta name="referrer" content="no-referrer" />
     <meta
@@ -14,12 +14,14 @@
     />
     <title>Toolkit de Ciberseguridad · anthlab</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="css/style.css?v=3" />
+    <link rel="stylesheet" href="css/style.css?v=5" />
     <script src="js/password-generator.js" defer></script>
     <script src="js/password-analyzer.js" defer></script>
     <script src="js/network.js" defer></script>
     <script src="js/network-ui.js" defer></script>
-    <script src="js/main.js?v=4" defer></script>
+    <script src="js/url-analyzer.js?v=1.0.1" defer></script>
+    <script src="js/url-ui.js?v=1.0.1" defer></script>
+    <script src="js/main.js?v=5" defer></script>
     <script src="js/analyzer-ui.js" defer></script>
   </head>
   <body>
@@ -32,7 +34,7 @@
       </a>
 
       <div class="topbar-right">
-        <span class="version">v0.2</span>
+        <span class="version">v1.0.0</span>
         <a
           href="https://anthlab.github.io/"
           target="_blank"
@@ -61,6 +63,11 @@
           <a class="tool-link" href="#network">
             <span class="tool-icon" aria-hidden="true">/</span>
             <span>IP y subredes</span>
+            <span class="active-dot" aria-hidden="true"></span>
+          </a>
+          <a class="tool-link" href="#url">
+            <span class="tool-icon" aria-hidden="true">↗</span>
+            <span>Analizador de URLs</span>
             <span class="active-dot" aria-hidden="true"></span>
           </a>
         </nav>
@@ -628,6 +635,99 @@
               no garantiza que una IP sea pública utilizable. No consulta ubicación,
               propietario, reputación ni conectividad.
             </p>
+          </section>
+        </section>
+
+        <section id="url" class="tool-panel" aria-labelledby="url-title" hidden>
+          <div class="page-heading">
+            <div class="page-meta">
+              <span class="eyebrow">04 / DIRECCIONES WEB</span>
+              <span class="live-badge">Disponible</span>
+            </div>
+            <h1 id="url-title">Analizador de URLs<span>.</span></h1>
+            <p>Separa las partes de una dirección y señala algunos detalles para revisar.</p>
+          </div>
+
+          <form id="url-form" class="configuration-grid analyzer-grid" novalidate>
+            <section class="settings-panel" aria-labelledby="url-input-title">
+              <div class="panel-heading">
+                <h2 id="url-input-title">Dirección para analizar</h2>
+                <span class="panel-number">01</span>
+              </div>
+              <label class="candidate-label" for="url-input">URL completa</label>
+              <input
+                id="url-input"
+                class="candidate-input"
+                type="text"
+                maxlength="2048"
+                placeholder="https://example.com/ruta"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-describedby="url-hint"
+                required
+              />
+              <p id="url-hint" class="analyzer-copy">
+                Empieza por http:// o https://. Se analiza el texto sin visitar la web.
+              </p>
+              <p id="url-error" class="error-message" role="alert" hidden></p>
+              <div class="analysis-actions">
+                <button type="submit" class="generate-button">Analizar URL</button>
+                <button id="clear-url" type="button" class="small-button" disabled>Borrar</button>
+              </div>
+              <button id="url-example" type="button" class="network-example">
+                Probar un ejemplo con avisos
+              </button>
+              <p id="url-status" class="status-message" role="status"></p>
+              <div class="detail-note">
+                <span class="detail-symbol" aria-hidden="true">↳</span>
+                <div>
+                  <h3>Todo se queda en tu navegador</h3>
+                  <p>No abre el enlace, no descarga contenido y no consulta servicios externos.</p>
+                </div>
+              </div>
+            </section>
+
+            <section class="details-panel" aria-labelledby="url-result-title">
+              <div class="panel-heading">
+                <h2 id="url-result-title">Resultado</h2>
+                <span class="panel-number">02</span>
+              </div>
+              <p id="url-empty">Introduce una URL o prueba el ejemplo.</p>
+              <div id="url-result" hidden></div>
+              <p class="analysis-limit">
+                Los avisos no confirman que una web sea peligrosa. Que no haya
+                avisos tampoco garantiza que sea segura, aunque use HTTPS.
+              </p>
+            </section>
+          </form>
+
+          <section id="url-how" class="how-section" aria-labelledby="url-how-title">
+            <div class="how-heading">
+              <span class="eyebrow">CÓMO FUNCIONA</span>
+              <h2 id="url-how-title">Lee las partes antes de abrir un enlace.</h2>
+            </div>
+            <div class="how-grid">
+              <article>
+                <span class="step-number">01</span>
+                <h3>Separa la dirección</h3>
+                <p>Usa la API URL del navegador para leer protocolo, host, puerto,
+                  ruta, consulta y fragmento.</p>
+              </article>
+              <article>
+                <span class="step-number">02</span>
+                <h3>Señala detalles</h3>
+                <p>Busca HTTP, datos antes de @, IPs en formatos alternativos,
+                  punycode y puertos distintos del habitual. Los caracteres
+                  codificados se muestran como información.</p>
+              </article>
+              <article>
+                <span class="step-number">03</span>
+                <h3>Muestra el destino</h3>
+                <p>El host se muestra como texto. No consulta DNS, reputación,
+                  redirecciones ni el contenido de la web.</p>
+              </article>
+            </div>
           </section>
         </section>
 

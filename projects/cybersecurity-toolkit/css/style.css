@@ -1075,3 +1075,34 @@ footer {
   box-sizing: border-box;
   margin-bottom: 18px;
 }
+
+/* Los resultados de URL comparten la lista de datos de IP y subredes. */
+.url-summary {
+  margin: 0 0 22px;
+  font-size: 16px;
+}
+.url-findings {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+}
+.url-findings:empty {
+  display: none;
+}
+.url-findings li {
+  padding: 14px 0;
+  border-top: 1px solid var(--border);
+}
+.url-findings strong {
+  font-size: 13px;
+  color: #d9b36b;
+}
+.url-findings p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.url-findings .url-information strong {
+  color: var(--muted);
+}

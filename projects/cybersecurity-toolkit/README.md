@@ -1,16 +1,19 @@
 # Toolkit de Ciberseguridad
 
+Versión **1.0.0**: las cuatro herramientas ya están disponibles.
+
 Proyecto personal para practicar JavaScript y aplicar conceptos de seguridad y redes que estoy estudiando.
 
 Durante este tiempo he estado puliendo mi portfolio y quería empezar a añadir proyectos propios que pudiera ir mejorando poco a poco. De ahí salió la idea de crear este toolkit.
 
 ## Qué incluye
 
-Por ahora tiene tres herramientas, hechas con HTML, CSS y JavaScript:
+Por ahora tiene cuatro herramientas, hechas con HTML, CSS y JavaScript:
 
 - **Generador de contraseñas.** Permite elegir la longitud y los tipos de caracteres.
 - **Analizador de contraseñas.** Revisa la longitud y busca algunos patrones sencillos.
 - **IP y subredes.** Clasifica una IPv4 y calcula su subred a partir de un prefijo CIDR.
+- **Analizador de URLs.** Separa una dirección web y señala detalles para revisar.
 
 Puedes cambiar entre ellas desde el menú sin recargar la página. Los cálculos se hacen en el navegador y no necesitan un backend.
 
@@ -86,9 +89,38 @@ El número de hosts sale del cálculo; algunos rangos tienen usos especiales y n
 
 Todo se calcula en el navegador. No consulto ubicación, propietario, reputación ni conectividad. Si algún día añado una API, lo indicaré y explicaré qué datos se envían.
 
+## Analizador de URLs
+
+Lo añadí para practicar cómo se lee una dirección web. Escribes una URL con `http://` o `https://` y muestra el host de destino, puerto, ruta, consulta y fragmento.
+
+Señala HTTP, datos antes de `@`, IPs como destino, nombres en punycode (`xn--`), hosts con muchas partes, puertos distintos del habitual e IPs escritas en otros formatos. También avisa si hay barras invertidas, porque el navegador puede cambiarlas al leer la dirección.
+
+Por ejemplo, `http://2130706433/` apunta a `127.0.0.1`. Ahora comparo el host escrito con el que lee el navegador y aviso si una IPv4 está en decimal de un solo número, hexadecimal, octal, formato abreviado o con caracteres codificados.
+
+Los códigos como `%20` se muestran como información. Un espacio codificado no cambia por sí solo el resumen a «Hay detalles que revisar».
+
+El botón de ejemplo usa `http://cuenta.example.com@192.0.2.10:8080/iniciar?origen=correo`. Aunque al principio aparezca `cuenta.example.com`, el host es `192.0.2.10`. Así puedo ver por qué conviene leer la dirección entera.
+
+Uso la API `URL` del navegador para separar las partes. Los resultados son texto, sin enlaces. El analizador no abre la web ni envía la dirección a un servicio externo.
+
+### Límites
+
+Admite hasta 2048 caracteres y solo HTTP o HTTPS. No consulta DNS, reputación, certificados, redirecciones ni contenido. Tampoco intenta decidir quién es el propietario de un dominio.
+
+Hay huecos que conozco:
+
+- Solo aviso de un host largo cuando tiene cinco partes o más. `paypal.com.evil.net` tiene cuatro y no activa esa regla.
+- `www.shop.example.co.uk` sí la activa, aunque sea un nombre normal. Cuento partes separadas por puntos y no uso una lista de sufijos públicos para saber que `co.uk` va junto.
+- No busco posibles redirecciones dentro de parámetros como `?url=https://...`.
+- No tengo una lista de acortadores ni aviso por usar `bit.ly`. Tampoco resuelvo a dónde lleva.
+
+Un aviso puede tener una explicación normal: una IP local, un dominio internacional o un puerto de pruebas. No tener avisos tampoco significa que la web sea segura. HTTPS por sí solo no demuestra que una web sea de confianza.
+
+El botón **Borrar** limpia la URL y el resultado. La entrada también se limpia al salir de la página.
+
 ## Privacidad
 
-Las contraseñas y las IP se procesan en el navegador. La página no guarda las entradas en una base de datos, no usa analítica y no hace peticiones a APIs externas.
+Las contraseñas, las IP y las URLs se procesan en el navegador. La página no guarda las entradas en una base de datos, no usa analítica y no hace peticiones a APIs externas.
 
 La contraseña de prueba no aparece en la URL ni se guarda en el almacenamiento de la página. El botón **Borrar** limpia la entrada y el resultado; también se limpia al salir de la página.
 
@@ -108,7 +140,7 @@ No necesita MySQL ni instalar paquetes. También puedes abrir `index.html` direc
 
 | Archivo | Para qué sirve |
 | --- | --- |
-| `index.html` | Página con las tres herramientas. |
+| `index.html` | Página con las cuatro herramientas. |
 | `css/style.css` | Colores, paneles y adaptación a distintos tamaños de pantalla. |
 | `assets/favicon.svg` | Icono de la pestaña. |
 | `js/main.js` | Formulario del generador, portapapeles y navegación. |
@@ -117,9 +149,12 @@ No necesita MySQL ni instalar paquetes. También puedes abrir `index.html` direc
 | `js/analyzer-ui.js` | Entrada y resultados del analizador de contraseñas. |
 | `js/network.js` | Validación IPv4, clasificación y cálculo de subredes. |
 | `js/network-ui.js` | Formulario y resultados de IP y subredes. |
+| `js/url-analyzer.js` | Lectura de la URL y comprobaciones de su estructura. |
+| `js/url-ui.js` | Formulario, ejemplo y resultados del analizador de URLs. |
 | `tests/password-generator.test.js` | Pruebas de generación y ajustes inválidos. |
 | `tests/password-analyzer.test.js` | Pruebas de patrones, longitud y casos límite. |
 | `tests/network.test.js` | Pruebas de rangos IPv4, entradas inválidas y subredes. |
+| `tests/url-analyzer.test.js` | Pruebas de URLs, avisos y entradas inválidas. |
 | `README.md` | Explicación del proyecto. |
 
 La lógica de cada herramienta está separada de la pantalla para poder probarla con Node.js. Los resultados se insertan como texto, sin interpretar las entradas como HTML.
@@ -134,15 +169,20 @@ node --test tests/*.test.js
 
 Las pruebas del generador comprueban la longitud, los tipos de caracteres y las exclusiones. Las del analizador usan ejemplos inventados para revisar sus reglas. Las de red cubren rangos como CGNAT, documentación y multicast, además de cálculos de subredes y los casos `/0`, `/31` y `/32`.
 
+Las pruebas de URLs revisan el host de destino, datos antes de `@`, IPs, punycode, puertos, caracteres codificados y entradas que no admite la herramienta.
+
 ## Próximos pasos
 
-La siguiente herramienta que quiero añadir es un analizador de URLs, con comprobaciones sencillas de la estructura de una dirección. Mientras tanto, seguiré revisando estas tres herramientas y practicando los conceptos que hay detrás.
+Con estas cuatro herramientas tengo la primera versión completa del toolkit. Ahora quiero seguir repasando el código y mejorando lo que vaya viendo al usarlo.
 
 ## Referencias
 
 - [Web Crypto API — MDN](https://developer.mozilla.org/es/docs/Web/API/Web_Crypto_API)
 - [Clipboard API — MDN](https://developer.mozilla.org/es/docs/Web/API/Clipboard_API)
 - [NIST SP 800-63B-4 — Contraseñas](https://pages.nist.gov/800-63-4/sp800-63b.html#passwordver)
+- [API URL — MDN](https://developer.mozilla.org/en-US/docs/Web/API/URL)
+- [WHATWG — Lectura de direcciones IPv4](https://url.spec.whatwg.org/#concept-ipv4-parser)
+- [Public Suffix List — Qué es un sufijo público](https://publicsuffix.org/learn/)
 - [IANA — Rangos IPv4 de uso especial](https://www.iana.org/assignments/iana-ipv4-special-registry/)
 
 ## Portfolio
