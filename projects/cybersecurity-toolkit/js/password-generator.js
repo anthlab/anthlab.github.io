@@ -90,7 +90,7 @@ function describeSettings(config) {
   return {
     alphabetSize: alphabet.length,
     groupCount: groups.length,
-    // Es una estimación sencilla del espacio de búsqueda.
+    // Límite teórico: no descuenta la obligación de incluir todos los grupos.
     bits: length * Math.log2(alphabet.length)
   };
 }

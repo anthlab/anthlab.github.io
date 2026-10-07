@@ -84,7 +84,8 @@ const AnthlabAnalyzer = (() => {
         id: 'length', label: 'Longitud', warning: length < MIN_LENGTH,
         detail: length < MIN_LENGTH
           ? `${length} caracteres. Prueba con 15 o más, sin alargarla a base de repetir lo mismo.`
-          : `${length} caracteres. Supera la referencia de longitud de esta herramienta.`
+          : `${length} caracteres. ${length === MIN_LENGTH ? 'Alcanza' : 'Supera'} ` +
+            'la referencia de longitud de esta herramienta.'
       },
       {
         id: 'common', label: 'Contraseñas habituales', warning: common,

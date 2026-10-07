@@ -48,6 +48,9 @@ test('revisa la longitud alrededor del límite de referencia', () => {
   assert.equal(warns(short, 'length'), true);
   assert.equal(longer.length, 15);
   assert.equal(warns(longer, 'length'), false);
+  assert.match(longer.checks.find((check) => check.id === 'length').detail, /Alcanza/);
+  const above = analyzePassword('fR8!kM2#vP6$zA9&');
+  assert.match(above.checks.find((check) => check.id === 'length').detail, /Supera/);
 });
 
 test('señala posibles años y conserva los espacios de la entrada', () => {

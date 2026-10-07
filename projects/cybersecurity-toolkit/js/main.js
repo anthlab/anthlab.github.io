@@ -154,7 +154,7 @@
       if (active) link.setAttribute('aria-current', 'location');
       else link.removeAttribute('aria-current');
     });
-    howLink.setAttribute('href', selected === 'analyzer' ? '#analyzer-how' : '#how-it-works');
+    howLink.setAttribute('href', selected === 'generator' ? '#how-it-works' : `#${selected}-how`);
 
     if (window.innerWidth <= 900) {
       const activeLink = links.find((link) => link.classList.contains('active'));

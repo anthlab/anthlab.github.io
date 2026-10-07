@@ -1042,3 +1042,36 @@ footer {
     transition: none !important;
   }
 }
+
+/* IP y subredes: uso los mismos colores que en las contraseñas. */
+.network-example {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: transparent;
+  color: var(--text);
+}
+.network-results {
+  margin: 0;
+}
+.network-results dt {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.network-results dt:first-child {
+  margin-top: 0;
+}
+.network-results dd {
+  margin: 5px 0 0;
+  font-family: var(--mono);
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+#network-address,
+#network-prefix {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 18px;
+}

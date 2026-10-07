@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Generador y analizador de contraseñas que funcionan en tu navegador. Un proyecto de anthlab para practicar JavaScript y seguridad."
+      content="Herramientas de contraseñas, IPv4 y subredes que funcionan en tu navegador. Un proyecto de anthlab para practicar JavaScript y seguridad."
     />
     <meta name="referrer" content="no-referrer" />
     <meta
@@ -14,10 +14,12 @@
     />
     <title>Toolkit de Ciberseguridad · anthlab</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="css/style.css?v=2" />
+    <link rel="stylesheet" href="css/style.css?v=3" />
     <script src="js/password-generator.js" defer></script>
     <script src="js/password-analyzer.js" defer></script>
-    <script src="js/main.js?v=2" defer></script>
+    <script src="js/network.js" defer></script>
+    <script src="js/network-ui.js" defer></script>
+    <script src="js/main.js?v=4" defer></script>
     <script src="js/analyzer-ui.js" defer></script>
   </head>
   <body>
@@ -54,6 +56,11 @@
           <a class="tool-link" href="#analyzer">
             <span class="tool-icon" aria-hidden="true">≋</span>
             <span>Analizador de contraseñas</span>
+            <span class="active-dot" aria-hidden="true"></span>
+          </a>
+          <a class="tool-link" href="#network">
+            <span class="tool-icon" aria-hidden="true">/</span>
+            <span>IP y subredes</span>
             <span class="active-dot" aria-hidden="true"></span>
           </a>
         </nav>
@@ -314,9 +321,9 @@
                     <span class="bits-unit">bits</span>
                   </p>
                   <small>
-                    Cálculo orientativo usando la longitud y el número de
-                    caracteres disponibles. No es una predicción del tiempo
-                    necesario para romper la contraseña.
+                    Estimación a partir de la longitud y el alfabeto. No descuenta
+                    la obligación de incluir cada tipo seleccionado y puede
+                    sobreestimar la entropía. No predice el tiempo para adivinarla.
                   </small>
                 </div>
 
@@ -523,6 +530,104 @@
                 <p>Muestra los avisos por separado. Que no aparezcan avisos no demuestra que una contraseña sea segura.</p>
               </article>
             </div>
+          </section>
+        </section>
+
+        <section id="network" class="tool-panel" aria-labelledby="network-title" hidden>
+          <div class="page-heading">
+            <div class="page-meta">
+              <span class="eyebrow">03 / REDES IPv4</span>
+              <span class="live-badge">Disponible</span>
+            </div>
+            <h1 id="network-title">IP y subredes<span>.</span></h1>
+            <p>Clasifica una IPv4 y calcula su máscara, red, broadcast y rango de hosts.</p>
+          </div>
+
+          <form id="network-form" class="configuration-grid analyzer-grid" novalidate>
+            <section class="settings-panel" aria-labelledby="network-input-title">
+              <div class="panel-heading">
+                <h2 id="network-input-title">Datos de entrada</h2>
+                <span class="panel-number">01</span>
+              </div>
+
+              <label class="candidate-label" for="network-address">Dirección IPv4</label>
+              <input
+                id="network-address"
+                class="candidate-input"
+                type="text"
+                maxlength="15"
+                placeholder="192.168.1.10"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+                aria-describedby="network-hint"
+                required
+              >
+
+              <label class="candidate-label" for="network-prefix">Prefijo CIDR (0–32)</label>
+              <input
+                id="network-prefix"
+                class="candidate-input"
+                type="number"
+                min="0"
+                max="32"
+                step="1"
+                value="24"
+                aria-describedby="network-hint"
+                required
+              >
+
+              <p id="network-hint" class="analyzer-copy">
+                Solo IPv4. Todo se calcula en tu navegador, sin consultas externas.
+              </p>
+              <button type="submit" class="generate-button">Analizar IP y subred</button>
+              <button id="network-example" type="button" class="network-example">
+                Probar 192.168.1.10 /24
+              </button>
+              <p id="network-error" class="error-message" role="alert" hidden></p>
+            </section>
+
+            <section class="details-panel" aria-labelledby="network-result-title">
+              <div class="panel-heading">
+                <h2 id="network-result-title">Resultado</h2>
+                <span class="panel-number">02</span>
+              </div>
+              <p id="network-empty">Introduce los datos para empezar.</p>
+              <div id="network-result" hidden></div>
+              <p id="network-status" class="sr-only" role="status"></p>
+            </section>
+          </form>
+
+          <section id="network-how" class="how-section" aria-labelledby="network-how-title">
+            <div class="how-heading">
+              <span class="eyebrow">CÓMO FUNCIONA</span>
+              <h2 id="network-how-title">Direcciones IPv4 y bits de red.</h2>
+            </div>
+            <div class="how-grid">
+              <article>
+                <span class="step-number">01</span>
+                <h3>Revisa la dirección</h3>
+                <p>Cada IPv4 tiene cuatro octetos de 8 bits. Se comprueba el formato
+                  y se compara con algunos rangos privados y especiales.</p>
+              </article>
+              <article>
+                <span class="step-number">02</span>
+                <h3>Calcula la red</h3>
+                <p>El prefijo indica los bits de red. La operación IP AND máscara
+                  conserva esos bits y pone a cero los de host.</p>
+              </article>
+              <article>
+                <span class="step-number">03</span>
+                <h3>Obtiene el rango</h3>
+                <p>En una /24 hay 256 direcciones y 254 hosts. Para /31 se aplica
+                  el caso de enlaces punto a punto; /32 es una sola dirección.</p>
+              </article>
+            </div>
+            <p class="analysis-limit">
+              La clasificación es básica: quedar fuera de los rangos identificados
+              no garantiza que una IP sea pública utilizable. No consulta ubicación,
+              propietario, reputación ni conectividad.
+            </p>
           </section>
         </section>
 
