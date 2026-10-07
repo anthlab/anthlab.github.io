@@ -18,7 +18,9 @@ HTML, CSS y JavaScript. Alojado en GitHub Pages.
 - `assets/` — imágenes y CV.
 - `projects/` — páginas individuales de los proyectos.
 
-El kit de herramientas de ciberseguridad está en `projects/cybersecurity-toolkit/`. Ya incluye un generador y un analizador de contraseñas. Su README explica cómo funcionan, qué comprueba el analizador y cómo ejecutar las pruebas.
+El [kit de herramientas de ciberseguridad](projects/cybersecurity-toolkit/) está terminado. Incluye un generador y un analizador de contraseñas, una herramienta de IP y subredes y un analizador de URLs.
+
+Las cuatro herramientas funcionan en el navegador, sin enviar los datos a servicios externos. En su [README](projects/cybersecurity-toolkit/README.md) explico cómo funcionan, sus límites y cómo ejecutar las pruebas.
 
 ## Contacto
 
