@@ -18,9 +18,10 @@ HTML, CSS y JavaScript. Alojado en GitHub Pages.
 - `assets/` — imágenes y CV.
 - `projects/` — páginas individuales de los proyectos.
 
-El [kit de herramientas de ciberseguridad](projects/cybersecurity-toolkit/) está terminado. Incluye un generador y un analizador de contraseñas, una herramienta de IP y subredes y un analizador de URLs.
+## Proyectos
 
-Las cuatro herramientas funcionan en el navegador, sin enviar los datos a servicios externos. En su [README](projects/cybersecurity-toolkit/README.md) explico cómo funcionan, sus límites y cómo ejecutar las pruebas.
+- **Kit de herramientas de ciberseguridad — completado:** está en `projects/cybersecurity-toolkit/`. Incluye un generador y un analizador de contraseñas, una herramienta de IP y subredes y un analizador de URLs. Su README explica cómo funcionan y cómo ejecutar las pruebas.
+- **Analizador de logs para SOC — en desarrollo:** está en `projects/soc-log-analyzer/`. Estoy empezando por estudiar los logs de autenticación y definir el alcance de una primera versión en Python. La página del proyecto recoge este punto de partida.
 
 ## Contacto
 

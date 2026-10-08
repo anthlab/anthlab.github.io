@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Analizador de logs para SOC de Anthony Zamora. Proyecto en fase inicial: estudio de logs de autenticación y definición de una primera versión en Python.">
+  <title>Analizador de logs para SOC · anthlab</title>
+  <link rel="stylesheet" href="../../css/style.css?v=5">
+  <link rel="stylesheet" href="../../css/project.css?v=2">
+</head>
+<body class="project-page">
+  <header class="topbar">
+    <a href="./" class="brand" aria-label="Inicio del analizador de logs para SOC">
+      <span>~/</span>anthlab<span class="brand-divider">/</span><span class="brand-product">soc-log-analyzer</span>
+    </a>
+    <div class="topbar-right">
+      <a href="../../index.html">Portfolio <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main class="case-study">
+    <header class="case-header">
+      <p class="case-kicker">En desarrollo · Fase inicial</p>
+      <h1>Analizador de logs para SOC</h1>
+      <p class="case-lead">Estoy empezando una herramienta en Python para leer logs de autenticación, agrupar intentos fallidos por IP y señalar patrones que merezcan una revisión. De momento, esta página recoge el objetivo y los primeros pasos del proyecto.</p>
+      <div class="hero-tags" aria-label="Temas del proyecto">
+        <span class="tag tag-green">Python</span>
+        <span class="tag tag-gray">Logs de autenticación</span>
+        <span class="tag tag-gray">SOC</span>
+      </div>
+    </header>
+
+    <section class="case-section" aria-labelledby="motivation-title">
+      <h2 id="motivation-title">Por qué quiero hacerlo</h2>
+      <p>En la especialización de ciberseguridad vamos a trabajar en un SOC y quiero aprovecharlo para entender mejor cómo se investigan los eventos de seguridad. Con este proyecto quiero practicar Python y aprender a sacar información útil de los registros de un sistema.</p>
+    </section>
+
+    <section class="case-section" aria-labelledby="starting-title">
+      <h2 id="starting-title">Por dónde voy a empezar</h2>
+      <p>Antes de escribir el analizador, voy a informarme sobre los logs de autenticación en Linux: qué datos contienen, cómo aparecen los intentos fallidos y qué diferencias hay entre los formatos. Quiero entender lo que estoy leyendo para poder explicar después por qué el programa señala un evento.</p>
+      <p>También voy a definir qué analizará la primera versión y en qué casos tendría sentido revisar varios intentos de acceso. Un intento fallido puede ser un error al escribir la contraseña; necesito tener en cuenta el contexto al plantear las reglas.</p>
+    </section>
+
+    <section class="case-section" aria-labelledby="next-title">
+      <h2 id="next-title">El siguiente paso</h2>
+      <p>Elegir un formato de log y preparar unos ejemplos de prueba. A partir de ahí empezaré con un script pequeño que lea el archivo, y añadiré el análisis poco a poco, documentando cada avance en GitHub.</p>
+    </section>
+
+    <div class="case-back">
+      <a href="../../index.html#projects" class="btn btn-outline">← Volver al portfolio</a>
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-text">anthlab · <span>Analizador de logs para SOC</span></span>
+  </footer>
+</body>
+</html>
