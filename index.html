@@ -3,18 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Anthony Zamora — titulado en ASIR y DAW, estudiante de ciberseguridad en CIPFP Cheste. Proyectos, experiencia y contacto.">
+<meta name="description" content="Anthony Zamora Martínez — titulado en ASIR y DAW, estudiante de ciberseguridad en CIPFP Cheste. Proyectos, experiencia y contacto.">
+<meta name="theme-color" content="#160f22">
 <title>anthlab · Sistemas y Ciberseguridad</title>
-<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico?v=2">
-<link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon.png?v=2">
-<link rel="stylesheet" href="css/style.css?v=5">
+<link rel="icon" type="image/x-icon" href="assets/images/favicon.ico?v=3">
+<link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon.png?v=3">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png?v=3">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png?v=3">
+<link rel="stylesheet" href="css/style.css?v=11">
 </head>
 <body>
 
 
 <!-- NAV -->
 <nav id="navbar">
-  <a href="#home" class="nav-logo"><span>~/</span>anthlab</a>
+  <a href="#home" class="nav-logo" aria-label="Anthlab, inicio">
+    <img src="assets/images/favicon.png?v=3" alt="" width="40" height="40">
+    <span>anthlab<span class="brand-dot">.</span></span>
+  </a>
   <ul class="nav-links">
     <li><a href="#projects">Proyectos</a></li>
     <li><a href="#experience">Experiencia</a></li>
@@ -26,23 +32,24 @@
     <li><a href="#contact">Contacto</a></li>
   </ul>
   <div class="nav-right">
-    <a href="https://github.com/anthlab" target="_blank" rel="noopener" class="nav-gh">github/anthlab ↗</a>
+    <a href="https://github.com/anthlab" target="_blank" rel="noopener" class="nav-gh">GitHub ↗</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <div id="home" class="hero-wrap">
   <div class="hero">
+    <div class="hero-copy">
     <div class="hero-status">
       <span class="dot"></span>
-      estudiante de ciberseguridad · buscando prácticas · valencia, españa
+      Buscando prácticas <span class="status-location">/ Valencia</span>
     </div>
 
     <h1>
       <span class="name">Anthony</span><br>
-      <span class="role">Estudiante de ciberseguridad</span>
-      <span class="hero-focus">Sistemas y Redes</span>
+      <span class="surname">Zamora Martínez<span class="name-dot">.</span></span>
     </h1>
+    <p class="hero-focus">Sistemas, redes y <span>ciberseguridad.</span></p>
 
     <p class="hero-desc">
       Soy Anthony, vivo en Valencia. He terminado ASIR y DAW y en octubre de 2026
@@ -64,10 +71,24 @@
     </div>
 
     <div class="hero-cta">
-      <a href="#contact" class="btn btn-solid">Contactar</a>
-      <a href="https://github.com/anthlab" target="_blank" rel="noopener" class="btn btn-outline">GitHub ↗</a>
-      <a href="assets/documents/CV-Anthony_Zamora.pdf" download class="btn btn-outline">Descargar CV ↗</a>
+      <a href="#projects" class="btn btn-solid">Explorar proyectos <span aria-hidden="true">↗</span></a>
+      <a href="#contact" class="btn btn-outline">Contactar</a>
+      <a href="assets/documents/CV-Anthony_Zamora.pdf" download class="hero-cv">Descargar CV <span aria-hidden="true">↓</span></a>
     </div>
+    </div>
+
+    <figure class="hero-identity">
+      <div class="identity-heading">
+        <span>anthlab</span>
+        <span class="identity-caption">Laboratorio personal</span>
+      </div>
+      <div class="profile-stage">
+        <div class="profile-ring" aria-hidden="true"></div>
+        <img src="assets/images/anthony-profile.png" alt="Anthony Zamora Martínez" width="853" height="1844" fetchpriority="high">
+      </div>
+      <figcaption>Lo que aprendo, lo pongo en práctica.</figcaption>
+      <div class="identity-topics"><span>Sistemas</span><span>Redes</span><span>Seguridad</span></div>
+    </figure>
   </div>
 </div>
 
