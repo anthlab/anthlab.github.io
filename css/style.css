@@ -1385,6 +1385,8 @@ footer {
   }
   .hero h1 .surname {
     font-size: clamp(30px, 8.5vw, 52px);
+    letter-spacing: -0.025em;
+    word-spacing: 0.1em;
   }
   .hero-desc {
     margin-top: 18px;
