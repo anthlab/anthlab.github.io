@@ -1,0 +1,169 @@
+.anthwatch-page .topbar {
+  background: rgba(22, 15, 34, 0.96);
+  border-color: var(--border);
+}
+
+.anthwatch-page .brand-divider {
+  color: var(--border2);
+}
+
+.anthwatch-page .case-header h1 {
+  margin-bottom: 0.5rem;
+}
+
+.anthwatch-page .case-subtitle {
+  margin-bottom: 1.2rem;
+  color: var(--accent);
+  font-size: 1rem;
+}
+
+.anthwatch-page .case-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.75rem;
+}
+
+.anthwatch-page .lab-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  background: var(--bg2);
+}
+
+.anthwatch-page .lab-status-dot {
+  flex: 0 0 7px;
+  height: 7px;
+  margin-top: 0.55rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.anthwatch-page .lab-status strong {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.anthwatch-page .lab-status p {
+  margin-top: 0.35rem;
+  color: var(--text2);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.anthwatch-page .lab-table-wrap {
+  margin: 1.4rem 0;
+  overflow-x: auto;
+}
+
+.anthwatch-page .lab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+
+.anthwatch-page .lab-table th,
+.anthwatch-page .lab-table td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  text-align: left;
+}
+
+.anthwatch-page .lab-table thead {
+  background: var(--bg2);
+}
+
+.anthwatch-page .lab-table th {
+  font-weight: 500;
+}
+
+.anthwatch-page .lab-table tbody th {
+  width: 32%;
+}
+
+.anthwatch-page .lab-table td {
+  color: var(--text2);
+  line-height: 1.75;
+}
+
+.anthwatch-page .lab-flow {
+  margin: 1.25rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent);
+}
+
+.anthwatch-page #first-case {
+  scroll-margin-top: 6rem;
+}
+
+.anthwatch-page .lab-steps {
+  margin: 1.25rem 0;
+}
+
+.anthwatch-page .lab-steps li + li {
+  margin-top: 0.8rem;
+}
+
+.anthwatch-page .lab-mitre {
+  font-size: 0.83rem;
+}
+
+.anthwatch-page .case-section a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.anthwatch-page .case-section a:hover {
+  color: var(--accent2);
+}
+
+.anthwatch-page .investigation-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.4rem 2rem;
+  margin: 1.5rem 0;
+}
+
+.anthwatch-page .investigation-fields div {
+  padding-left: 1rem;
+  border-left: 1px solid var(--border2);
+}
+
+.anthwatch-page .investigation-fields dt {
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.anthwatch-page .investigation-fields dd {
+  color: var(--text2);
+  font-size: 0.85rem;
+  line-height: 1.75;
+}
+
+@media (max-width: 600px) {
+  .anthwatch-page .lab-table th,
+  .anthwatch-page .lab-table td {
+    padding: 0.8rem 0.6rem;
+  }
+
+  .anthwatch-page .lab-table code {
+    font-size: 0.74rem;
+  }
+
+  .anthwatch-page .investigation-fields {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+  }
+
+  .anthwatch-page .case-actions .btn {
+    font-size: 0.78rem;
+    padding: 0.7rem 1rem;
+  }
+}

@@ -21,6 +21,7 @@ HTML, CSS y JavaScript. Alojado en GitHub Pages.
 ## Proyectos
 
 - **Kit de herramientas de ciberseguridad — completado:** está en `projects/cybersecurity-toolkit/`. Incluye un generador y un analizador de contraseñas, una herramienta de IP y subredes y un analizador de URLs. Su README explica cómo funcionan y cómo ejecutar las pruebas.
+- **Anthwatch · Laboratorio SOC — en desarrollo:** está en `projects/anthwatch/`. Estoy preparando un laboratorio con Wazuh para practicar la investigación de alertas. La página recoge el montaje previsto, el primer caso SSH y cómo documentaré las investigaciones. La documentación técnica estará en [anthwatch-soc-lab](https://github.com/anthlab/anthwatch-soc-lab).
 - **Analizador de logs para SOC — en desarrollo:** está en `projects/soc-log-analyzer/`. Estoy empezando por estudiar los logs de autenticación y definir el alcance de una primera versión en Python. La página del proyecto recoge este punto de partida.
 
 ## Contacto

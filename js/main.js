@@ -28,6 +28,47 @@ if ('IntersectionObserver' in window) {
   reveals.forEach((element) => element.classList.add('visible'));
 }
 
+// ── PROJECT FILTERS ──
+(() => {
+  const section = document.getElementById('projects');
+  if (!section) return;
+
+  const filters = section.querySelector('.project-filters');
+  const buttons = section.querySelectorAll('[data-project-filter]');
+  const cards = section.querySelectorAll('.project-card');
+  const status = section.querySelector('#project-filter-status');
+
+  if (!filters || !buttons.length || !cards.length) return;
+
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      const filter = button.dataset.projectFilter;
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const matches = filter === 'all' || card.dataset.status === filter;
+        card.hidden = !matches;
+        if (matches) {
+          card.classList.add('visible');
+          visibleCount += 1;
+        }
+      });
+
+      buttons.forEach((item) => {
+        item.setAttribute('aria-pressed', String(item === button));
+      });
+
+      if (status) {
+        const label = visibleCount === 1 ? 'proyecto' : 'proyectos';
+        status.textContent = `Mostrando ${visibleCount} ${label}. Filtro: ${button.textContent.trim()}.`;
+      }
+    });
+  });
+
+  filters.hidden = false;
+  if (status) status.textContent = `Mostrando ${cards.length} proyectos. Filtro: Todos.`;
+})();
+
 // ── ARTICLES CAROUSEL ──
 (() => {
   const track = document.getElementById('carousel-track');

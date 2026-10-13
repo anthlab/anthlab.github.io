@@ -10,7 +10,7 @@
 <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon.png?v=3">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32.png?v=3">
 <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png?v=3">
-<link rel="stylesheet" href="css/style.css?v=12">
+<link rel="stylesheet" href="css/style.css?v=16">
 </head>
 <body>
 
@@ -67,6 +67,9 @@
         <span class="tag tag-gray">Python</span>
         <span class="tag tag-gray">Bash</span>
         <span class="tag tag-gray">JavaScript</span>
+        <span class="tag tag-gray">SOC</span>
+        <span class="tag tag-gray">SIEM</span>
+        <span class="tag tag-gray">EDR</span>
       </div>
     </div>
 
@@ -98,20 +101,33 @@
     <h2 class="section-title">Proyectos</h2>
     <div class="section-line"></div>
   </div>
-  <div class="projects-grid">
-    <div class="project-card reveal reveal-delay-1">
+  <div class="project-filters" role="group" aria-label="Filtrar proyectos por estado" hidden>
+    <button type="button" class="project-filter" data-project-filter="all" aria-pressed="true" aria-controls="projects-list">Todos</button>
+    <button type="button" class="project-filter" data-project-filter="completed" aria-pressed="false" aria-controls="projects-list">Completados</button>
+    <button type="button" class="project-filter" data-project-filter="development" aria-pressed="false" aria-controls="projects-list">En desarrollo</button>
+  </div>
+  <p id="project-filter-status" class="project-filter-status" role="status" aria-live="polite" aria-atomic="true"></p>
+  <div id="projects-list" class="projects-grid">
+    <div class="project-card reveal reveal-delay-1" data-status="completed">
       <div class="project-top"><span class="project-icon">🔐</span><span class="coming-label">Completado</span></div>
       <div class="project-title">Kit de herramientas de ciberseguridad</div>
       <div class="project-desc">He creado cuatro herramientas para practicar JavaScript, redes y seguridad: un generador y un analizador de contraseñas, una herramienta de IP y subredes y un analizador de URLs. Todo funciona en el navegador, sin enviar los datos a servicios externos.</div>
       <div class="project-tags"><span class="ptag">HTML</span><span class="ptag">CSS</span><span class="ptag">JavaScript</span><span class="ptag">Web Crypto</span></div>
       <a class="project-link" href="projects/cybersecurity-toolkit/">Ver proyecto <span aria-hidden="true">→</span></a>
     </div>
-    <div class="project-card reveal reveal-delay-2">
+    <div class="project-card reveal reveal-delay-2" data-status="development">
       <div class="project-top"><span class="project-icon">📋</span><span class="coming-label">En desarrollo</span></div>
       <div class="project-title">Analizador de logs para SOC</div>
       <div class="project-desc">Estoy empezando un analizador de logs de autenticación en Python. El primer paso es estudiar cómo se registran los eventos y definir qué patrones revisar, antes de implementar la lectura y el análisis de los logs.</div>
       <div class="project-tags"><span class="ptag">Python</span><span class="ptag">Logs</span><span class="ptag">SOC</span></div>
       <a class="project-link" href="projects/soc-log-analyzer/">Ver proyecto <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="project-card reveal reveal-delay-3" data-status="development">
+      <div class="project-top"><span class="project-icon" aria-hidden="true">🛡️</span><span class="coming-label">En desarrollo</span></div>
+      <div class="project-title">Anthwatch · Laboratorio SOC</div>
+      <div class="project-desc">Estoy preparando un laboratorio con Wazuh para practicar la detección y la investigación de alertas. El primer caso será revisar varios intentos fallidos de acceso por SSH y un acceso correcto posterior, documentando las evidencias y mi conclusión.</div>
+      <div class="project-tags"><span class="ptag">Wazuh</span><span class="ptag">SIEM</span><span class="ptag">Ubuntu Server</span><span class="ptag">VirtualBox</span><span class="ptag">SOC</span></div>
+      <a class="project-link" href="projects/anthwatch/">Ver proyecto <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
@@ -344,6 +360,6 @@
   <span class="footer-text">anthlab · <span>sistemas y ciberseguridad</span> · valencia 2026</span>
 </footer>
 
-<script src="js/main.js?v=2"></script>
+<script src="js/main.js?v=3"></script>
 </body>
 </html>

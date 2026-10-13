@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#160f22">
+  <meta name="description" content="Anthwatch, el laboratorio personal SOC de Anthony Zamora. Proyecto en preparación con Wazuh, Ubuntu Server y un primer caso de investigación de accesos SSH.">
+  <title>Anthwatch · Laboratorio SOC · anthlab</title>
+  <link rel="icon" type="image/x-icon" href="../../assets/images/favicon.ico?v=3">
+  <link rel="icon" type="image/png" sizes="96x96" href="../../assets/images/favicon.png?v=3">
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/images/favicon-32.png?v=3">
+  <link rel="apple-touch-icon" sizes="180x180" href="../../assets/images/apple-touch-icon.png?v=3">
+  <link rel="stylesheet" href="../../css/style.css?v=16">
+  <link rel="stylesheet" href="../../css/project.css?v=2">
+  <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body class="project-page anthwatch-page">
+  <header class="topbar">
+    <a href="../../index.html#projects" class="brand" aria-label="Anthlab, volver a los proyectos del portfolio">
+      <span>~/</span>anthlab<span class="brand-divider">/</span><span class="brand-product">anthwatch</span>
+    </a>
+    <div class="topbar-right">
+      <a href="../../index.html#projects">Portfolio <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main class="case-study">
+    <header class="case-header">
+      <p class="case-kicker">En desarrollo · Preparación del laboratorio</p>
+      <h1>Anthwatch</h1>
+      <p class="case-subtitle">Laboratorio personal SOC</p>
+      <p class="case-lead">Estoy montando un laboratorio con Wazuh para aprender a investigar alertas de seguridad. Quiero seguir cada caso desde los primeros eventos hasta una conclusión que pueda explicar con los registros.</p>
+      <div class="hero-tags" aria-label="Tecnologías y temas previstos">
+        <span class="tag tag-green">Wazuh</span>
+        <span class="tag tag-gray">SIEM</span>
+        <span class="tag tag-gray">Ubuntu Server</span>
+        <span class="tag tag-gray">VirtualBox</span>
+        <span class="tag tag-gray">SOC</span>
+      </div>
+      <div class="case-actions">
+        <a href="https://github.com/anthlab/anthwatch-soc-lab" class="btn btn-solid" target="_blank" rel="noopener noreferrer">Ver en GitHub <span aria-hidden="true">↗</span></a>
+        <a href="#first-case" class="btn btn-outline">El primer caso <span aria-hidden="true">↓</span></a>
+      </div>
+    </header>
+
+    <aside class="lab-status" aria-label="Estado actual del proyecto">
+      <span class="lab-status-dot" aria-hidden="true"></span>
+      <div>
+        <strong>Preparando el laboratorio</strong>
+        <p>He empezado por definir el montaje y documentar el objetivo. Las máquinas, las pruebas y la primera investigación están pendientes.</p>
+      </div>
+    </aside>
+
+    <section class="case-section" aria-labelledby="lab-title">
+      <h2 id="lab-title">El montaje previsto</h2>
+      <p>El laboratorio representará una pequeña empresa con un servidor Linux. Usaré tres máquinas virtuales, cada una con una función distinta:</p>
+      <div class="lab-table-wrap">
+        <table class="lab-table">
+          <thead>
+            <tr><th scope="col">Máquina</th><th scope="col">Para qué la usaré</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row"><code>anthwatch-wazuh</code></th><td>Recibir los eventos, aplicar las reglas de detección y consultar las alertas en el panel.</td></tr>
+            <tr><th scope="row"><code>anthwatch-server</code></th><td>Ubuntu Server con SSH y el agente de Wazuh. Será el equipo que investigaré.</td></tr>
+            <tr><th scope="row"><code>anthwatch-client</code></th><td>Otro Ubuntu Server desde el que generaré los intentos de acceso.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="lab-flow">El cliente generará los accesos por SSH al servidor Ubuntu. Su agente enviará los eventos a Wazuh, y yo los revisaré desde el panel.</p>
+      <p>Las máquinas compartirán una red solo-anfitrión, separada de mi red doméstica. Usaré NAT para instalar y actualizar paquetes, y lo desconectaré durante las pruebas. Todas las simulaciones se harán contra mis propias máquinas y con cuentas de prueba.</p>
+    </section>
+
+    <section id="first-case" class="case-section" aria-labelledby="first-case-title">
+      <p class="case-kicker">Caso 01 · Pendiente</p>
+      <h2 id="first-case-title">Intentos de acceso por SSH</h2>
+      <p>Empezaré con varios intentos fallidos de acceso desde la misma IP y con una misma cuenta. Después haré un acceso correcto para revisar la secuencia completa.</p>
+      <ol class="lab-steps">
+        <li><strong>Comprobar la recogida de eventos.</strong> Verificaré que los accesos aparecen en los registros del servidor y llegan a Wazuh.</li>
+        <li><strong>Generar la secuencia de fallos.</strong> Revisaré qué alerta se produce y qué regla la activa.</li>
+        <li><strong>Investigar lo ocurrido.</strong> Buscaré la IP, el usuario, los horarios y los intentos, incluyendo el acceso correcto posterior.</li>
+        <li><strong>Escribir una conclusión.</strong> Explicaré qué puedo confirmar, qué información falta y qué medidas propondría.</li>
+      </ol>
+      <p>Un acceso correcto después de varios fallos no demuestra por sí solo que la cuenta esté comprometida. Tendré que revisar el contexto y distinguir lo que he simulado de lo que demuestran los registros.</p>
+      <p class="lab-mitre">La simulación se relacionará con <a href="https://attack.mitre.org/techniques/T1110/001/" target="_blank" rel="noopener noreferrer">T1110.001 · Password Guessing</a>. Añadiré <a href="https://attack.mitre.org/techniques/T1078/" target="_blank" rel="noopener noreferrer">T1078 · Valid Accounts</a> si el escenario incluye un uso no autorizado simulado de la cuenta.</p>
+    </section>
+
+    <section class="case-section" aria-labelledby="investigation-title">
+      <h2 id="investigation-title">Cómo documentaré cada investigación</h2>
+      <p>Usaré una misma ficha para todos los casos. Me servirá para ordenar las pruebas y explicar por qué he tomado una decisión.</p>
+      <dl class="investigation-fields">
+        <div><dt>Lo que simulé</dt><dd>Qué actividad generé en el laboratorio y qué esperaba observar.</dd></div>
+        <div><dt>Lo que muestran los registros</dt><dd>Alertas, eventos y consultas que apoyan lo que puedo confirmar.</dd></div>
+        <div><dt>El contexto del caso</dt><dd>Equipo, IP, usuario, cronología y técnica MITRE asociada.</dd></div>
+        <div><dt>La decisión</dt><dd>Prioridad, conclusión, información que falta, medidas propuestas y criterio para escalar.</dd></div>
+      </dl>
+      <p>Esta página irá recogiendo las capturas y los casos a medida que los complete. Los informes y los pasos para repetir cada prueba estarán en el repositorio.</p>
+    </section>
+
+    <section class="case-section" aria-labelledby="next-title">
+      <h2 id="next-title">Después del primer caso</h2>
+      <p>Probaré cambios en archivos monitorizados, creación de usuarios y actividad con <code>sudo</code>. Más adelante trabajaré en reglas propias y búsquedas de actividad sospechosa a partir de una hipótesis.</p>
+      <p>El <a href="../soc-log-analyzer/">analizador de logs en Python</a> seguirá como proyecto separado. Usará datos exportados de Anthwatch para agrupar eventos y preparar cronologías.</p>
+    </section>
+
+    <div class="case-back">
+      <a href="../../index.html#projects" class="btn btn-outline">← Volver al portfolio</a>
+    </div>
+  </main>
+
+  <footer>
+    <span class="footer-text">anthlab · <span>Anthwatch</span></span>
+  </footer>
+</body>
+</html>
